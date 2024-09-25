@@ -1,4 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column, DeleteDateColumn } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, DeleteDateColumn, OneToMany } from 'typeorm';
+import { WorkoutPlanExercise } from './WorkoutPlanExercise';
 
 @Entity({ name: "exercises" })
 export class Exercise {
@@ -19,4 +20,7 @@ export class Exercise {
 
     @DeleteDateColumn() 
     deletedAt: Date; 
+
+    @OneToMany(() => WorkoutPlanExercise, workoutPlanExercise => workoutPlanExercise.exercise,{cascade:true})
+    workoutPlanExercises: WorkoutPlanExercise[];
 }

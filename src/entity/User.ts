@@ -13,6 +13,7 @@ import {
 } from "typeorm";
 
 import { Role } from "./Role";
+import { WorkoutPlan } from "./WorkoutPlan";
 
 @Entity({ name: "users" })
 export class User {
@@ -37,6 +38,8 @@ export class User {
   @UpdateDateColumn()
   updatedAt: Date;
 
+  @OneToMany(() => WorkoutPlan, workoutPlan => workoutPlan.user,{cascade:true})
+  workoutPlans: WorkoutPlan[];
 
   @ManyToMany(() => Role, (role) => role.users, { cascade: true })
   @JoinTable({ name: "user_roles" })

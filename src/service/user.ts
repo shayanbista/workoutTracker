@@ -1,5 +1,4 @@
 import { User } from "../entity/User";
-// import { hashPassword } from "../utils/encrypter";
 import * as roleService from "./role";
 import { AppDataSource } from "../dataSource";
 import { Role } from "../entity/Role";
@@ -14,13 +13,6 @@ export const userRepository = AppDataSource.getRepository(User);
 export const findByEmail = async (email: string) => {
   return userRepository.findOneBy({ email });
 };
-
-
-// export const findByEmailAndPassword=async (email: string,password:string) => {
-//   console.log("userEmail",email);
-//   console.log("userPassword",pass)
-//   return userRepository.findOneBy({ email,password});
-// };
 
 
 export const create = async (
