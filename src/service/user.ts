@@ -31,6 +31,14 @@ export const create = async (
   return newUser;
 };
 
+export const findUserRolesPermisions = async (id: number) => {
+  return userRepository.findOne({
+    where: { id },
+    relations: ["roles", "roles.permissions"],
+  });
+};
+
+
 
 export const createUser = async (
   email: string,
@@ -53,6 +61,12 @@ export const createUser = async (
     name,
   );
   return newUser;
+};
+
+
+export const getUser = async (id: number) => {
+  const user = await findUserRolesPermisions(id);
+  return user;
 };
 
 

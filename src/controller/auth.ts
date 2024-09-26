@@ -13,9 +13,8 @@ export const login= async (
     res: Response,
     next: NextFunction
   ) => {
-    let { email, password} = req.body;
     try {
-      const userLogin= await authService.login(email,password);
+      const userLogin= await authService.login(req.body);
       res.status(httpStatusCodes.OK).json(userLogin);
     } catch (err) {
       next(err);

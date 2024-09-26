@@ -16,8 +16,27 @@ const findByName=async (name:string)=>{
     })
 }
 
+const getPermissions=async (name:string)=>{
+    roleLogger.info(`Searching for role: ${name}`);
+    return await roleRepository.findOne({
+        where:{
+            name
+        }
+        
+    })
+}
+
+
 
 export const getRole = async (roleName: string) => {
+    roleLogger.info(`Searching for name: ${roleName}`);
+    const role = await findByName(roleName);
+    return role;
+  };
+  
+
+
+  export const getRolePermissions = async (roleName: string) => {
     roleLogger.info(`Searching for name: ${roleName}`);
     const role = await findByName(roleName);
     return role;
