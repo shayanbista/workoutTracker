@@ -22,3 +22,34 @@ export const addExercise = async (
     next(err);
   }
 };
+
+
+export const getExercises = async (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ) => {
+    try {
+      exerciseController.info("passing exercise information for addition");
+      const addExercise = await exerciseService.getExercises();
+      res.status(httpStatusCodes.OK).json(addExercise);
+    } catch (err) {
+      next(err);
+    }
+  };
+
+  export const getExercise= async (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ) => {
+    try {
+      exerciseController.info("getting all the aviliable exercises");
+      const addExercise = await exerciseService.getExercises();
+      res.status(httpStatusCodes.CREATED).json("created successfully");
+    } catch (err) {
+      next(err);
+    }
+  };
+  
+  

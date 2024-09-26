@@ -17,9 +17,10 @@ export const createUser = async (
   let { email, password, role, name } = req.body;
 
   try {
+    
     const data = await userService.createUser(email, password, role, name);
-
     res.status(httpStatusCodes.CREATED).json({ message: "signup success" });
+
   } catch (err) {
     next(err);
   }

@@ -15,6 +15,10 @@ const getByName = async (exerciseName: string) => {
   });
 };
 
+const findAll=()=>{
+    return exercisesRepository.find();
+}
+
 // create a new exercise
 const createExercise = async (exerciseInformation: Exercise) => {
   const newExercise = new Exercise();
@@ -38,3 +42,14 @@ export const newExercise = async (exerciseInformation: Exercise) => {
   const newExercise = createExercise(exerciseInformation);
   return true;
 };
+
+
+export const getExercises= async () => {
+    exerciseService.info("fetching all the exercises");
+    const fetchedExercises=await findAll();
+    if(fetchedExercises.length===0 || !fetchedExercises){
+        throw new BadRequestError("no exercises at the current moment");
+    }
+    return fetchedExercises;
+  };
+  
