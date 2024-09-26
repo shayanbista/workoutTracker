@@ -80,7 +80,7 @@ export const login = async (body: Pick<User, "email" | "password">) => {
   if (!user) throw new BadRequestError("Account doesnt match");
 
   const roleName = user.roles.map((role) => role.name);
-  
+
   const permissions = user.roles.flatMap((role) =>
     role.permissions.map((permission) => permission.name)
   );
@@ -100,6 +100,7 @@ export const login = async (body: Pick<User, "email" | "password">) => {
   const refreshToken = sign(payload, secretKey, {
     expiresIn: config.jwt.refreshTokenExpiration,
   });
+  
   return { user, accessToken, refreshToken };
 };
 
