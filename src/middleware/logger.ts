@@ -8,7 +8,7 @@ const logger = loggerWithNameSpace("RequestLoger");
 export const RequestLogger = (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   logger.info(`${req.method}:$${req.url}`);
   next();

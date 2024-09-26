@@ -25,7 +25,7 @@ export class CreateSeedLogTable1621676708074 implements MigrationInterface {
           },
         ],
       }),
-      true
+      true,
     );
   }
 

@@ -4,14 +4,13 @@ import { IConfig } from "./interface/configuration";
 import { SnakeNamingStrategy } from "typeorm-naming-strategies";
 import { requireEnv } from "./utils/envDataHandler";
 
-
 dotenv.config({ path: __dirname + "/../.env" });
 
 const config: IConfig = {
   port: requireEnv("PORT"),
   jwt: {
     secret: requireEnv("JWT_SECRET"),
-    accessExpiration:parseInt(requireEnv("ACCESS_TOKEN_EXPIRY")),
+    accessExpiration: parseInt(requireEnv("ACCESS_TOKEN_EXPIRY")),
     refreshTokenExpiration: parseInt(requireEnv("REFRESH_TOKEN_EXPIRY")),
   },
   database: {

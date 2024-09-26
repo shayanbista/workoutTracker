@@ -4,8 +4,6 @@
 // import { BadRequestError } from "../error/BadRequestError";
 // import bcrypt from 'bcrypt';
 
-
-
 // import loggerWithNameSpace from "../utils/logger";
 // import { sign } from "jsonwebtoken";
 // import config from "../config";
@@ -21,7 +19,6 @@
 
 //     if(!existingUser) throw new BadRequestError("email not found");
 
-
 //     const isPasswordValid = await bcrypt.compare(password, existingUser.password);
 
 //     if (!isPasswordValid) {
@@ -35,7 +32,7 @@
 //         email: existingUser.email,
 //         role: existingUser.roles,
 //       };
-    
+
 //       const accessToken = sign(payload, config.jwt.secret!, {
 //         expiresIn: config.jwt.accessExpiration,
 //       });
@@ -46,9 +43,6 @@
 //       return{accessToken,refreshToken}
 
 // }
-
-
-
 
 import { User } from "../interface/user";
 import * as userService from "../service/user";
@@ -71,7 +65,7 @@ export const login = async (body: Pick<User, "email" | "password">) => {
   }
   const userPassword = await comparePassword(
     body.password,
-    existingUser.password
+    existingUser.password,
   );
 
   if (!userPassword) throw new BadRequestError("Password doesnt match");
@@ -82,7 +76,7 @@ export const login = async (body: Pick<User, "email" | "password">) => {
   const roleName = user.roles.map((role) => role.name);
 
   const permissions = user.roles.flatMap((role) =>
-    role.permissions.map((permission) => permission.name)
+    role.permissions.map((permission) => permission.name),
   );
 
   const payload = {
@@ -100,7 +94,6 @@ export const login = async (body: Pick<User, "email" | "password">) => {
   const refreshToken = sign(payload, secretKey, {
     expiresIn: config.jwt.refreshTokenExpiration,
   });
-  
+
   return { user, accessToken, refreshToken };
 };
-

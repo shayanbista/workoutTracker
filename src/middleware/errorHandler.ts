@@ -14,7 +14,7 @@ export function genericErrorHandler(
   error: Error,
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) {
   if (error.stack) {
     logger.error(error.stack);

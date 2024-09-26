@@ -1,4 +1,4 @@
-  // Assuming you have AppDataSource setup
+// Assuming you have AppDataSource setup
 import { AppDataSource } from "../dataSource";
 import { Exercise } from "../entity/Exercises";
 
@@ -33,7 +33,8 @@ export const exerciseSeed = async () => {
       },
       {
         name: "Pull-ups",
-        description: "An upper body strength exercise working the back and biceps.",
+        description:
+          "An upper body strength exercise working the back and biceps.",
         type: "Strength",
       },
 
@@ -55,7 +56,8 @@ export const exerciseSeed = async () => {
       },
       {
         name: "Cycling (Outdoor)",
-        description: "Cycling outdoors for cardiovascular health and endurance.",
+        description:
+          "Cycling outdoors for cardiovascular health and endurance.",
         type: "Cardio",
       },
       {
@@ -72,12 +74,14 @@ export const exerciseSeed = async () => {
       // Flexibility exercises
       {
         name: "Yoga",
-        description: "A series of stretches and poses for flexibility and mindfulness.",
+        description:
+          "A series of stretches and poses for flexibility and mindfulness.",
         type: "Flexibility",
       },
       {
         name: "Pilates",
-        description: "Exercises focusing on core strength, flexibility, and body control.",
+        description:
+          "Exercises focusing on core strength, flexibility, and body control.",
         type: "Flexibility",
       },
       {
@@ -94,7 +98,8 @@ export const exerciseSeed = async () => {
       },
       {
         name: "Table Tennis",
-        description: "An indoor game played on a table using paddles and a ball.",
+        description:
+          "An indoor game played on a table using paddles and a ball.",
         type: "Indoor Game",
       },
       {
@@ -116,12 +121,14 @@ export const exerciseSeed = async () => {
       },
       {
         name: "Jumping Jacks",
-        description: "A full-body cardiovascular exercise performed with jumping movements.",
+        description:
+          "A full-body cardiovascular exercise performed with jumping movements.",
         type: "Cardio",
       },
       {
         name: "Rowing (Indoor)",
-        description: "A full-body cardiovascular workout using a rowing machine.",
+        description:
+          "A full-body cardiovascular workout using a rowing machine.",
         type: "Cardio",
       },
     ];

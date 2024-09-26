@@ -22,7 +22,7 @@ export class User {
 
   @Column()
   name: string;
-  
+
   @Column({ unique: true })
   email: string;
 
@@ -38,7 +38,9 @@ export class User {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @OneToMany(() => WorkoutPlan, workoutPlan => workoutPlan.user,{cascade:true})
+  @OneToMany(() => WorkoutPlan, (workoutPlan) => workoutPlan.user, {
+    cascade: true,
+  })
   workoutPlans: WorkoutPlan[];
 
   @ManyToMany(() => Role, (role) => role.users, { cascade: true })

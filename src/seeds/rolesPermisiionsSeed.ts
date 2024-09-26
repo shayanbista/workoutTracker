@@ -6,7 +6,6 @@ const permissionRepo = AppDataSource.getRepository(Permission);
 const roleRepo = AppDataSource.getRepository(Role);
 
 export async function rolesPermissionseed() {
-  
   // creating permissions
   const userPostPermission = new Permission();
   userPostPermission.name = "users.post";
@@ -20,29 +19,26 @@ export async function rolesPermissionseed() {
   const userPutPermission = new Permission();
   userPutPermission.name = "users.put";
 
-
   const workoutPostPermission = new Permission();
-  workoutPostPermission.name = "workouts.post";  
+  workoutPostPermission.name = "workouts.post";
 
   const workoutGetPermission = new Permission();
-  workoutGetPermission.name = "workouts.get"; 
+  workoutGetPermission.name = "workouts.get";
 
   const workoutPutPermission = new Permission();
-  workoutPutPermission.name = "workouts.put"; 
+  workoutPutPermission.name = "workouts.put";
 
   const reportPermission = new Permission();
   reportPermission.name = "reports.get";
 
-
   const exerciseAddPermission = new Permission();
-  exerciseAddPermission.name = "exercises.add"; 
-  
+  exerciseAddPermission.name = "exercises.add";
+
   const exerciseGetPermission = new Permission();
-  exerciseGetPermission.name = "exercises.get";  
+  exerciseGetPermission.name = "exercises.get";
 
   const exerciseDeletePermission = new Permission();
   exerciseDeletePermission.name = "exercises.delete";
-
 
   await permissionRepo.save([
     userPostPermission,
@@ -52,9 +48,9 @@ export async function rolesPermissionseed() {
     workoutPostPermission,
     workoutGetPermission,
     reportPermission,
-    exerciseAddPermission,  
+    exerciseAddPermission,
     exerciseGetPermission,
-    exerciseDeletePermission 
+    exerciseDeletePermission,
   ]);
 
   // creating their relation
@@ -68,7 +64,7 @@ export async function rolesPermissionseed() {
     workoutPostPermission,
     workoutGetPermission,
     reportPermission,
-    exerciseGetPermission
+    exerciseGetPermission,
   ];
 
   const adminRole = new Role();
@@ -78,10 +74,10 @@ export async function rolesPermissionseed() {
     userGetPermission,
     workoutGetPermission,
     workoutPutPermission,
-    exerciseAddPermission,  
+    exerciseAddPermission,
     exerciseGetPermission,
-    exerciseDeletePermission 
+    exerciseDeletePermission,
   ];
 
-  await roleRepo.save([userRole,adminRole]);
+  await roleRepo.save([userRole, adminRole]);
 }

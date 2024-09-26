@@ -8,12 +8,9 @@ import { NotFoundError } from "../error/NotFoundError";
 
 export const userRepository = AppDataSource.getRepository(User);
 
-
-
 export const findByEmail = async (email: string) => {
   return userRepository.findOneBy({ email });
 };
-
 
 export const create = async (
   email: string,
@@ -22,7 +19,7 @@ export const create = async (
   name: string,
 ) => {
   const newUser = new User();
-  newUser.name=name;
+  newUser.name = name;
   newUser.email = email;
   newUser.password = password;
   newUser.roles = [roles];
@@ -38,8 +35,6 @@ export const findUserRolesPermisions = async (id: number) => {
   });
 };
 
-
-
 export const createUser = async (
   email: string,
   password: string,
@@ -54,19 +49,11 @@ export const createUser = async (
   const roleExists = await roleService.getRole(role);
   if (!roleExists) throw new NotFoundError("Role not found");
 
-  const newUser = await create(
-    email,
-    newPassword,
-    roleExists,
-    name,
-  );
+  const newUser = await create(email, newPassword, roleExists, name);
   return newUser;
 };
-
 
 export const getUser = async (id: number) => {
   const user = await findUserRolesPermisions(id);
   return user;
 };
-
-

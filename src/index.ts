@@ -16,7 +16,7 @@ app.use(helmet());
 app.use(
   cors({
     allowedHeaders: "*",
-  })
+  }),
 );
 
 app.use(express.json());

@@ -12,7 +12,7 @@ export class SnakeNamingStrategy
   columnName(
     propertyName: string,
     customName: string | undefined,
-    embeddedPrefixes: string[]
+    embeddedPrefixes: string[],
   ): string {
     return (
       snakeCase(embeddedPrefixes.join("_")) +

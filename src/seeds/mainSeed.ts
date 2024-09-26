@@ -24,7 +24,6 @@ async function main() {
     await exerciseSeed();
     console.log("seeding successful ");
   } catch (err) {
-
     console.log("err", err);
   }
 }
