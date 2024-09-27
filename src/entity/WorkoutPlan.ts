@@ -27,8 +27,11 @@ export class WorkoutPlan {
 
   @ManyToOne(() => User, (user) => user.workoutPlans)
   user: User;
-  workoutPlanExercises: WorkoutPlanExercise;
 
+
+  @OneToMany(() => WorkoutPlanExercise, (workoutPlanExercise) => workoutPlanExercise.workoutPlan)
+  workoutPlanExercises: WorkoutPlanExercise[];
+  
   @OneToMany(
     () => WorkoutSession,
     (workoutSession) => workoutSession.workoutPlan,

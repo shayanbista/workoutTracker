@@ -95,5 +95,5 @@ export const login = async (body: Pick<User, "email" | "password">) => {
     expiresIn: config.jwt.refreshTokenExpiration,
   });
 
-  return { user, accessToken, refreshToken };
+  return { accessToken, refreshToken };
 };

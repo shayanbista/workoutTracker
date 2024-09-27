@@ -15,10 +15,8 @@ export class WorkoutPlanExercise {
   @Column("decimal")
   weight: number;
 
-  @ManyToOne(
-    () => WorkoutPlan,
-    (workoutPlan) => workoutPlan.workoutPlanExercises,
-  )
+  
+  @ManyToOne(() => WorkoutPlan, (workoutPlan) => workoutPlan.workoutPlanExercises)
   workoutPlan: WorkoutPlan;
 
   @ManyToOne(() => Exercise, (exercise) => exercise.workoutPlanExercises)
