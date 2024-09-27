@@ -45,3 +45,11 @@ export const createExerciseBodySchema = Joi.object({
     stripUnknown: true,
   });
 
+
+export const exerciseIdSchema = Joi.object({
+    id: Joi.number().required().messages({
+      "number.base": "Id must be a number",
+      "any.required": "Id is required",
+    }),
+  }).options({ stripUnknown: true });
+

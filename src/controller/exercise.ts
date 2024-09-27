@@ -31,8 +31,8 @@ export const getExercises = async (
   ) => {
     try {
       exerciseController.info("passing exercise information for addition");
-      const addExercise = await exerciseService.getExercises();
-      res.status(httpStatusCodes.OK).json(addExercise);
+      const exercises = await exerciseService.getExercises();
+      res.status(httpStatusCodes.OK).json(exercises);
     } catch (err) {
       next(err);
     }
@@ -44,12 +44,15 @@ export const getExercises = async (
     next: NextFunction,
   ) => {
     try {
-      exerciseController.info("getting all the aviliable exercises");
-      const addExercise = await exerciseService.getExercises();
-      res.status(httpStatusCodes.CREATED).json("created successfully");
+      exerciseController.info("fetching the id of the exercise to be fetched");
+      const id=req.params;
+      const exercise= await exerciseService.getExerciseById(id.id);
+      res.status(httpStatusCodes.OK).json(exercise);
     } catch (err) {
       next(err);
     }
   };
+
+
   
   

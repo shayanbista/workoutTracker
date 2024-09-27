@@ -16,7 +16,13 @@ const getByName = async (exerciseName: string) => {
 };
 
 const findAll=()=>{
-    return exercisesRepository.find();
+  return exercisesRepository.find();
+}
+
+const findById=async(id:number)=>{
+  return exercisesRepository.findOne({where:{
+    id
+  }})
 }
 
 // create a new exercise
@@ -27,6 +33,8 @@ const createExercise = async (exerciseInformation: Exercise) => {
   newExercise.description = exerciseInformation.description;
   await exercisesRepository.save(newExercise);
 };
+
+
 
 // Function to create a new exercise
 export const newExercise = async (exerciseInformation: Exercise) => {
@@ -51,5 +59,13 @@ export const getExercises= async () => {
         throw new BadRequestError("no exercises at the current moment");
     }
     return fetchedExercises;
-  };
+};
+
+
+export const getExerciseById=async(id:number)=>{
+  exerciseService.info("fetching the exercise based on its id");
+  const fetchedExercise=await findById(id);
+  if(!fetchedExercise) throw new BadRequestError("following exercise doesnt exist");
+  return fetchedExercise;
+}
   
