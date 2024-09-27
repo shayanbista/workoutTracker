@@ -20,10 +20,20 @@ const createNewPlan=async(workoutPlan:Plan)=>{
 
 }
 
+const deletePlan=async(id:number)=>{
+    return await workoutPlanRepository.softDelete(id);
+}
+
 
 export const addPlan=async(workoutPlan:Plan)=>{
     const existingPlan= await findByName(workoutPlan.name);
     if(existingPlan) throw new BadRequestError("plan already exists");
     const newPLan=await createNewPlan(workoutPlan);
     return true;
+}
+
+
+export const removePlan=async(id:number)=>{
+    const remove=await deletePlan(id);
+    return true
 }

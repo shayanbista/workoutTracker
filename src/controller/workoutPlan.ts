@@ -28,6 +28,23 @@ export const addWorkoutPlan = async (
   }
 };
 
+export const removeWorkoutPlan = async (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ) => {
+    try {
+      const userId=req.user?.id!;
+      workoutPlanController.info("removing the workout Plan of the user");
+      const workoutPlanId=req.params.id;
+      const removePlan=await  workOutPlanService.removePlan(workoutPlanId)
+      res.status(httpStatusCodes.NO_CONTENT).json("deleted successfully");
+    } catch (err) {
+      next(err);
+    }
+  };
+  
+
 
 
   

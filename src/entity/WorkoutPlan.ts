@@ -6,6 +6,7 @@ import {
   OneToMany,
   CreateDateColumn,
   UpdateDateColumn,
+  DeleteDateColumn,
 } from "typeorm";
 import { User } from "./User";
 import { WorkoutSession } from "./WorkoutPlanSession";
@@ -24,6 +25,9 @@ export class WorkoutPlan {
 
   @UpdateDateColumn()
   updatedAt: Date;
+
+  @DeleteDateColumn()
+  deletedAt:Date;
 
   @ManyToOne(() => User, (user) => user.workoutPlans)
   user: User;

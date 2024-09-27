@@ -28,6 +28,9 @@ export async function rolesPermissionseed() {
   const workoutPutPermission = new Permission();
   workoutPutPermission.name = "workouts.put";
 
+  const workoutDeletePermission = new Permission();
+  workoutDeletePermission.name = "workouts.delete";
+
   const reportPermission = new Permission();
   reportPermission.name = "reports.get";
 
@@ -62,6 +65,7 @@ export async function rolesPermissionseed() {
     userGetPermission,
     userPutPermission,
     workoutPostPermission,
+    workoutDeletePermission,
     workoutGetPermission,
     reportPermission,
     exerciseGetPermission,
@@ -74,6 +78,7 @@ export async function rolesPermissionseed() {
     userGetPermission,
     workoutGetPermission,
     workoutPutPermission,
+    workoutDeletePermission,
     exerciseAddPermission,
     exerciseGetPermission,
     exerciseDeletePermission,
