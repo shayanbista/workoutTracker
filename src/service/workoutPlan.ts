@@ -12,6 +12,31 @@ const findByName=async(planName:string)=>{
     }})
 }
 
+const getAll = (userId: number) => {
+    return workoutPlanRepository.find({
+        where: {
+            user: {
+                id: userId,
+            },
+        },
+        relations: ['user'], 
+    });
+};
+
+
+const getById = (id: number, userId: number) => {
+    return workoutPlanRepository.findOne({
+        where: {
+            id: id.toString(),  
+            user: {
+                id: userId
+            }
+        },
+        relations: ['user'] 
+    });
+};
+
+
 const createNewPlan=async(workoutPlan:Plan)=>{
     let plan= new WorkoutPlan();
     plan.name=workoutPlan.name;
@@ -36,4 +61,17 @@ export const addPlan=async(workoutPlan:Plan)=>{
 export const removePlan=async(id:number)=>{
     const remove=await deletePlan(id);
     return true
+}
+
+
+export const getAllPlans=async(userId:number)=>{
+    const  getAllPlans= await getAll(userId);
+    if(!getAllPlans || getAllPlans.length==0) throw new BadRequestError("no existing plans of the user");
+    return getAllPlans
+}
+
+export const getPlan=async(id:number,userId:number)=>{
+    const  getplan= await getById(id,userId);
+    if(!getplan) throw new BadRequestError("plan doesnt exist");
+    return getplan
 }

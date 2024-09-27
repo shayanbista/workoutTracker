@@ -43,6 +43,44 @@ export const removeWorkoutPlan = async (
       next(err);
     }
   };
+
+
+  export const getWorkoutPlans = async (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ) => {
+    try {
+      const userId=req.user?.id!;
+      workoutPlanController.info("fetching all the workout plans of that user");
+      const plans= await workOutPlanService.getAllPlans(userId);
+      res.status(httpStatusCodes.OK).json(plans);
+    } catch (err) {
+      next(err);
+    }
+  };
+
+
+
+  export const getWorkoutPlan = async (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ) => {
+    try {
+      const userId=req.user?.id!;
+      const id=req.params.id;
+      workoutPlanController.info("fetching all the workout plans of that user");
+      const plans= await workOutPlanService.getPlan(id,userId);
+      res.status(httpStatusCodes.OK).json(plans);
+    } catch (err) {
+      next(err);
+    }
+  };
+
+ 
+
+
   
 
 
