@@ -6,11 +6,23 @@ import { Plan } from "../interface/workoutPlan"
 
 const workoutPlanRepository=AppDataSource.getRepository(WorkoutPlan)
 
+    
+
 const findByName=async(planName:string)=>{
     return workoutPlanRepository.findOne({where:{
         name:planName
     }})
 }
+
+
+
+const findById=async(id:string)=>{
+    return workoutPlanRepository.findOne({where:{
+        id
+    }})
+
+}
+
 
 const getAll = (userId: number) => {
     return workoutPlanRepository.find({
@@ -74,4 +86,13 @@ export const getPlan=async(id:number,userId:number)=>{
     const  getplan= await getById(id,userId);
     if(!getplan) throw new BadRequestError("plan doesnt exist");
     return getplan
+}
+
+
+
+export const findPlanById=async(planId:number)=>{
+    const existingPlan= await findById(String(planId));
+    if(!existingPlan) return null
+    return existingPlan;
+
 }
