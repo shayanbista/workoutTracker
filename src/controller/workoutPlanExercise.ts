@@ -1,4 +1,4 @@
-import httpStatusCodes from "http-status-codes";
+import httpStatusCodes, { RESET_CONTENT } from "http-status-codes";
 
 import { Request } from "../interface/request";
 import { Response, NextFunction } from "express";
@@ -7,13 +7,14 @@ import loggerWithNameSpace from "../utils/logger";
 
 import * as workoutPlanService from "../service/workoutPlan";
 
-
-const workoutPlanExerciseController = loggerWithNameSpace("workoutPlanExerciseController");
 import * as workoutPlanExerciseService from "../service/workoutPlanExercise";
 
 
-export const addWorkoutPlanExercises=async(req:Request,res:Response,next:NextFunction)=>{
+const workoutPlanExerciseController = loggerWithNameSpace("workoutPlanExerciseController");
 
+
+
+export const addWorkoutPlanExercise=async(req:Request,res:Response,next:NextFunction)=>{
     try{
         const newPlan=await workoutPlanExerciseService.addWorkoutPlanExercises(req.body);
         res.status(httpStatusCodes.CREATED).json("exercise added successfully")
@@ -22,9 +23,18 @@ export const addWorkoutPlanExercises=async(req:Request,res:Response,next:NextFun
         next(err)
     }
     
+}
+
+
+
+export const deleteWorkoutPlanExercise=async(req:Request,res:Response,next:NextFunction)=>{
+    try{
+        const deletePlan=await workoutPlanExerciseService.removeWorkoutPlanExercises(req.body);
+        // res.status(httpStatusCodes.NO_CONTENT);
+        res.status(httpStatusCodes.NO_CONTENT).json("deleted successfully")
+
+    }catch(err){
+        next(err)
+    }
     
-
- 
-
-
 }

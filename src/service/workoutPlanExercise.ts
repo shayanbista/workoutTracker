@@ -29,6 +29,31 @@ const findexisitngExercise = async (workPlanId: string, exerciseId: number,weigh
 
     return !!serviceExists;
   };
+
+
+const removeExercise = async (
+    workoutPlanExercise: Pick<IWorkoutPlanExercise, 'exerciseId' | 'workoutPlanId' | 'weight'>
+  ) => {
+      const { exerciseId, workoutPlanId, weight } = workoutPlanExercise; 
+  
+      const exerciseToDelete = await workoutPlanExerciseRepository.findOne({
+          where: {
+              weight: weight,  
+              exercise: { id: exerciseId },  
+              workoutPlan: { id: workoutPlanId.toString() },
+          }
+      });
+  
+      if (!exerciseToDelete) {
+          throw new BadRequestError("No exercise found to delete");
+      }
+  
+      const deletedExercise = await workoutPlanExerciseRepository.softDelete(exerciseToDelete.id);
+  
+      return 'deleted'; 
+  };
+  
+
   
 
 const createPlanExercise=async(workoutPlanExercise:IWorkoutPlanExercise)=>{
@@ -63,6 +88,19 @@ export const addWorkoutPlanExercises=async(workoutPlanExercise:IWorkoutPlanExerc
     const newWorkoutExercise= await createPlanExercise(workoutPlanExercise);
     return true
 
+    }catch(err){
+        throw err
+    }
+}
+
+
+export const removeWorkoutPlanExercises=async(workoutPlanExercise:Pick<IWorkoutPlanExercise, 'exerciseId' | 'workoutPlanId' | 'weight'>)=>{
+    try{
+    const workoutPlanExists= await workoutPlanService.findPlanById(workoutPlanExercise.workoutPlanId);
+    if(!workoutPlanExists) throw new BadRequestError("plan doesnot exist");
+    const exerciseId=await exerciseService.getExerciseById(workoutPlanExercise.exerciseId);
+    const newWorkoutExercise= await removeExercise(workoutPlanExercise);
+    console.log("workoutExercise",newWorkoutExercise);
     }catch(err){
         throw err
     }

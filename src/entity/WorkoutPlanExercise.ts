@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, ManyToOne, Column } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, ManyToOne, Column, DeleteDateColumn } from "typeorm";
 import { WorkoutPlan } from "./WorkoutPlan";
 import { Exercise } from "./Exercises";
 
@@ -15,7 +15,10 @@ export class WorkoutPlanExercise {
   @Column("decimal")
   weight: number;
 
-  
+  @DeleteDateColumn()
+  deletedAt:Date;
+
+
   @ManyToOne(() => WorkoutPlan, (workoutPlan) => workoutPlan.workoutPlanExercises)
   workoutPlan: WorkoutPlan;
 

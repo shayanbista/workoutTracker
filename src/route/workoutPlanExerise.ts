@@ -5,13 +5,15 @@ import { validateReqBody, validateReqParams } from "../middleware/validator";
 
 import { addWorkoutPlan, getWorkoutPlan, getWorkoutPlans, removeWorkoutPlan } from "../controller/workoutPlan";
 import { createPlanBodySchema, workoutPlanIdSchema } from "../schema/workoutPlan";
-import { addWorkoutPlanExercises } from "../controller/workoutPlanExercise";
+import { addWorkoutPlanExercise } from "../controller/workoutPlanExercise";
 import { createWorkoutPlanExerciseSchema } from "../schema/workoutPlanExercise";
+import { deleteWorkoutPlanExercise } from "../controller/workoutPlanExercise";
 
 
 const workoutPlanExerciseRouter = Router();
 // workoutPlanRouter.post("/", authenticate,authorize("workouts.post"),validateReqBody(createPlanBodySchema),addWorkoutPlan);
-workoutPlanExerciseRouter.post("/",authenticate,authorize("workouts.post"),validateReqBody(createWorkoutPlanExerciseSchema),addWorkoutPlanExercises);
+workoutPlanExerciseRouter.post("/",authenticate,authorize("workouts.post"),validateReqBody(createWorkoutPlanExerciseSchema),addWorkoutPlanExercise);
+workoutPlanExerciseRouter.delete("/",authenticate,authorize("workouts.delete"),deleteWorkoutPlanExercise);
 
 // workoutPlanRouter.delete("/:id", authenticate,authorize("workouts.delete"),validateReqParams(workoutPlanIdSchema),removeWorkoutPlan);
 // workoutPlanRouter.get("/", authenticate,authorize("workouts.get"),getWorkoutPlans);
