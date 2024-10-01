@@ -19,12 +19,14 @@ workoutPlanExerciseRouter.post(
   validateReqBody(createWorkoutPlanExerciseSchema),
   addWorkoutPlanExercise,
 );
+
 workoutPlanExerciseRouter.delete(
   "/",
   authenticate,
   authorize("workouts.delete"),
   deleteWorkoutPlanExercise,
 );
+
 workoutPlanExerciseRouter.put(
   "/",
   authenticate,
