@@ -29,12 +29,24 @@ export const addWorkoutPlanExercise=async(req:Request,res:Response,next:NextFunc
 
 export const deleteWorkoutPlanExercise=async(req:Request,res:Response,next:NextFunction)=>{
     try{
-        const deletePlan=await workoutPlanExerciseService.removeWorkoutPlanExercises(req.body);
-        // res.status(httpStatusCodes.NO_CONTENT);
+        const deletePlan=await workoutPlanExerciseService.removeWorkoutPlanExercises(req.body)
         res.status(httpStatusCodes.NO_CONTENT).json("deleted successfully")
 
     }catch(err){
         next(err)
     }
     
+}
+
+
+export const updateWorkoutPlanExercises=async(req:Request,res:Response,next:NextFunction)=>{
+    try{
+        console.log("body",req.body)
+        const updatePlan=await workoutPlanExerciseService.updateWorkoutPlanExercises(req.body)
+        res.status(httpStatusCodes.OK).json("updated successfully");
+        
+    }catch(err){
+        next(err)
+    }
+
 }

@@ -27,7 +27,7 @@ const findexisitngExercise = async (workPlanId: string, exerciseId: number,weigh
     });
   
 
-    return !!serviceExists;
+    return serviceExists;
   };
 
 
@@ -51,6 +51,36 @@ const removeExercise = async (
       const deletedExercise = await workoutPlanExerciseRepository.softDelete(exerciseToDelete.id);
   
       return 'deleted'; 
+  };
+
+
+
+export const updateExerciseInWorkoutPlan = async (
+    workoutPlanExercise: IWorkoutPlanExercise, 
+  ) => {
+    const exerciseAlreadyInPlan = await workoutPlanExerciseRepository.findOne({
+      where: {
+        workoutPlan: { id: workoutPlanExercise.workoutPlanId.toString() },
+        exercise: { id: workoutPlanExercise.exerciseId }
+      }
+    });
+  
+    if (!exerciseAlreadyInPlan) {
+      throw new BadRequestError("Exercise not found in workout plan");
+    }
+  
+    await workoutPlanExerciseRepository.update(
+      {
+        workoutPlan: { id: workoutPlanExercise.workoutPlanId.toString() },
+        exercise: { id: workoutPlanExercise.exerciseId }
+      },
+      {
+        sets: workoutPlanExercise.updatedSets ?? exerciseAlreadyInPlan.sets,
+        reps: workoutPlanExercise.updatedReps ?? exerciseAlreadyInPlan.reps,
+      }
+    );
+  
+    return true;
   };
   
 
@@ -105,3 +135,27 @@ export const removeWorkoutPlanExercises=async(workoutPlanExercise:Pick<IWorkoutP
         throw err
     }
 }
+
+
+
+
+export const updateWorkoutPlanExercises = async (
+    workoutPlanExercise: IWorkoutPlanExercise, 
+
+  ) => {
+    try {
+      // Check if the workout plan exists
+      const workoutPlanExists = await workoutPlanService.findPlanById(workoutPlanExercise.workoutPlanId);
+      if (!workoutPlanExists) {
+        throw new BadRequestError("Workout plan does not exist");
+      }
+  
+
+    const result = await updateExerciseInWorkoutPlan(workoutPlanExercise);
+    return result
+  
+    } catch (err) {
+      throw err;
+    }
+  };
+  

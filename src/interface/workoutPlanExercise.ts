@@ -4,5 +4,9 @@ export interface IWorkoutPlanExercise {
     reps: number;
     weight: number;
     workoutPlanId: number;  
-    exerciseId: number;        
+    exerciseId: number; 
+    updatedSets: number;
+    updatedReps: number;
   }
+
+

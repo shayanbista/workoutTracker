@@ -65,6 +65,7 @@ export async function rolesPermissionseed() {
     userGetPermission,
     userPutPermission,
     workoutPostPermission,
+    workoutPutPermission,
     workoutDeletePermission,
     workoutGetPermission,
     reportPermission,
