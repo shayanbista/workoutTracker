@@ -1,14 +1,12 @@
 import { AppDataSource } from "../dataSource";
-import { User } from "../entity/User";
 import { WorkoutPlan } from "../entity/WorkoutPlan";
 import { BadRequestError } from "../error/BadRequestError";
-import { Plan } from "../interface/workoutPlan";
-
-import * as workoutPlanService from "./workoutPlan";
-import * as exerciseService from "./exercise";
 import { WorkoutPlanExercise } from "../entity/WorkoutPlanExercise";
 import { IWorkoutPlanExercise } from "../interface/workoutPlanExercise";
 import { Exercise } from "../entity/Exercises";
+
+import * as workoutPlanService from "./workoutPlan";
+import * as exerciseService from "./exercise";
 
 const workoutPlanExerciseRepository =
   AppDataSource.getRepository(WorkoutPlanExercise);
@@ -143,7 +141,6 @@ export const removeWorkoutPlanExercises = async (
       workoutPlanExercise.exerciseId,
     );
     const newWorkoutExercise = await removeExercise(workoutPlanExercise);
-    console.log("workoutExercise", newWorkoutExercise);
   } catch (err) {
     throw err;
   }

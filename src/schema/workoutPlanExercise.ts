@@ -35,3 +35,4 @@ export const updateWorkoutPlanExerciseSchema = Joi.object({
   updatedSets: Joi.number().integer().min(1).optional(),
   updatedReps: Joi.number().integer().min(1).optional(),
 });
+
