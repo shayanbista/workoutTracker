@@ -41,10 +41,10 @@ export const createUser = async (
   role: string,
   name: string,
 ) => {
-  console.log("email",email)
+  console.log("email", email);
   const existingUser = await findByEmail(email);
 
-  console.log("existing user",existingUser)
+  console.log("existing user", existingUser);
   if (existingUser) {
     throw new BadRequestError("Email already in use");
   }

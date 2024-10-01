@@ -27,15 +27,17 @@ export class WorkoutPlan {
   updatedAt: Date;
 
   @DeleteDateColumn()
-  deletedAt:Date;
+  deletedAt: Date;
 
   @ManyToOne(() => User, (user) => user.workoutPlans)
   user: User;
 
-
-  @OneToMany(() => WorkoutPlanExercise, (workoutPlanExercise) => workoutPlanExercise.workoutPlan)
+  @OneToMany(
+    () => WorkoutPlanExercise,
+    (workoutPlanExercise) => workoutPlanExercise.workoutPlan,
+  )
   workoutPlanExercises: WorkoutPlanExercise[];
-  
+
   @OneToMany(
     () => WorkoutSession,
     (workoutSession) => workoutSession.workoutPlan,

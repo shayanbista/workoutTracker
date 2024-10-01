@@ -46,7 +46,7 @@ export const authorize = (permission: string | string) => {
       return;
     }
 
-    console.log("user permissions",user.permissions);
+    console.log("user permissions", user.permissions);
     const hasPermission = user.permissions.includes(permission);
     logger.info("checking user permission", hasPermission);
 

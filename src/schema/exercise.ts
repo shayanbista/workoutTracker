@@ -24,32 +24,39 @@ export const getExerciseQuerySchema = Joi.object({
 }).options({ stripUnknown: true });
 
 export const createExerciseBodySchema = Joi.object({
-    name: Joi.string().required().messages({
-      "any.required": "Name is required",
-      "string.empty": "Name cannot be empty",
-    }),
-    
-    description: Joi.string().required().messages({
-      "any.required": "Description is required",
-      "string.empty": "Description cannot be empty",
-    }),
-    
-    type: Joi.string().valid('Indoor Game', 'Outdoor Game', 'Fitness', 'Martial Arts', 'Team Sport', 'Individual Sport')
-      .required()
-      .messages({
-        "any.required": "Type is required",
-        "string.empty": "Type cannot be empty",
-        "any.only": "Type must be one of the following: Indoor Game, Outdoor Game, Fitness, Martial Arts, Team Sport, Individual Sport",
-      }),
-  }).options({
-    stripUnknown: true,
-  });
+  name: Joi.string().required().messages({
+    "any.required": "Name is required",
+    "string.empty": "Name cannot be empty",
+  }),
 
+  description: Joi.string().required().messages({
+    "any.required": "Description is required",
+    "string.empty": "Description cannot be empty",
+  }),
+
+  type: Joi.string()
+    .valid(
+      "Indoor Game",
+      "Outdoor Game",
+      "Fitness",
+      "Martial Arts",
+      "Team Sport",
+      "Individual Sport",
+    )
+    .required()
+    .messages({
+      "any.required": "Type is required",
+      "string.empty": "Type cannot be empty",
+      "any.only":
+        "Type must be one of the following: Indoor Game, Outdoor Game, Fitness, Martial Arts, Team Sport, Individual Sport",
+    }),
+}).options({
+  stripUnknown: true,
+});
 
 export const exerciseIdSchema = Joi.object({
-    id: Joi.number().required().messages({
-      "number.base": "Id must be a number",
-      "any.required": "Id is required",
-    }),
-  }).options({ stripUnknown: true });
-
+  id: Joi.number().required().messages({
+    "number.base": "Id must be a number",
+    "any.required": "Id is required",
+  }),
+}).options({ stripUnknown: true });

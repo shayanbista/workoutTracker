@@ -1,5 +1,4 @@
-export interface Plan{
-    userId:number;
-    name: string;
+export interface Plan {
+  userId: number;
+  name: string;
 }
-  
