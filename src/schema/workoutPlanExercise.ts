@@ -43,3 +43,17 @@ export const createWorkoutPlanExerciseSchema = Joi.object({
     }),
 });
 
+
+
+
+export const updateWorkoutPlanExerciseSchema = Joi.object({
+  workoutPlanId: Joi.number().integer().required(),
+  exerciseId: Joi.number().integer().required(),
+  sets: Joi.number().integer().min(1).required(),
+  weight: Joi.number().integer().min(1).required(),
+  reps: Joi.number().integer().min(1).required(),
+  updatedSets: Joi.number().integer().min(1).optional(),
+  updatedReps: Joi.number().integer().min(1).optional(),
+});
+
+
