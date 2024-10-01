@@ -3,8 +3,8 @@ import { WorkoutPlan } from "./WorkoutPlan";
 
 @Entity({ name: "workout_sessions" })
 export class WorkoutSession {
-  @PrimaryGeneratedColumn("uuid")
-  id: string;
+  @PrimaryGeneratedColumn()
+  id: number;
 
   @Column({ type: "timestamp" })
   scheduledAt: Date;

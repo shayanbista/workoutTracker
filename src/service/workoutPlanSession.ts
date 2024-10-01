@@ -50,4 +50,9 @@ export const addWorkoutSession = async (
     return true;
 
   };
+
+export const deleteSession=async(workSessionId:number)=>{
+  const sessionExists=await workoutSessionRepository.softDelete(workSessionId);
+  return true;
+}
   

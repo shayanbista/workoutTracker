@@ -48,9 +48,7 @@ export const updateWorkoutPlanExercises = async (
   next: NextFunction,
 ) => {
   try {
-    console.log("body", req.body);
-    const updatePlan =
-      await workoutPlanExerciseService.updateWorkoutPlanExercises(req.body);
+    const updatePlan =await workoutPlanExerciseService.updateWorkoutPlanExercises(req.body);
     res.status(httpStatusCodes.OK).json("updated successfully");
   } catch (err) {
     next(err);

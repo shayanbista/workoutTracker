@@ -21,3 +21,11 @@ export const workoutSessionSchema = Joi.object({
 });
 
 
+export const workoutSessionIdSchema = Joi.object({
+  id: Joi.number().required().messages({
+    "number.base": "Id must be a number",
+    "any.required": "Id is required",
+  }),
+}).options({ stripUnknown: true });
+
+
