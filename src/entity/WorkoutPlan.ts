@@ -11,6 +11,7 @@ import {
 import { User } from "./User";
 import { WorkoutSession } from "./WorkoutPlanSession";
 import { WorkoutPlanExercise } from "./WorkoutPlanExercise";
+import { WorkoutLog } from "./WorkoutLog";
 
 @Entity({ name: "workout_plans" })
 export class WorkoutPlan {
@@ -43,4 +44,7 @@ export class WorkoutPlan {
     (workoutSession) => workoutSession.workoutPlan,
   )
   workoutSessions: WorkoutSession[];
+  
+  @OneToMany(() => WorkoutLog, (workoutLog) => workoutLog.workoutPlan)
+  workoutLogs: WorkoutLog[];  
 }

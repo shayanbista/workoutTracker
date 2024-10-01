@@ -14,6 +14,7 @@ import {
 
 import { Role } from "./Role";
 import { WorkoutPlan } from "./WorkoutPlan";
+import { WorkoutLog } from "./WorkoutLog";
 
 @Entity({ name: "users" })
 export class User {
@@ -42,6 +43,9 @@ export class User {
     cascade: true,
   })
   workoutPlans: WorkoutPlan[];
+
+  @OneToMany(() => WorkoutLog, (workoutLog) => workoutLog.user)
+  workoutLogs: WorkoutLog[];
 
   @ManyToMany(() => Role, (role) => role.users, { cascade: true })
   @JoinTable({ name: "user_roles" })
