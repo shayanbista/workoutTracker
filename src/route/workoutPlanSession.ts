@@ -4,6 +4,7 @@ import { authenticate, authorize } from "../middleware/auth";
 import {
   addWorkoutSession,
   removeWorkoutSession,
+  updateWorkoutSession,
 } from "../controller/workoutPlanSession";
 import { validateReqBody, validateReqParams } from "../middleware/validator";
 import {
@@ -29,6 +30,14 @@ workoutPlanSessionRouter.delete(
   authorize("workouts.delete"),
   validateReqParams(workoutSessionIdSchema),
   removeWorkoutSession,
+);
+
+workoutPlanSessionRouter.put(
+  "/:id",
+  authenticate,
+  authorize("workouts.put"),
+  validateReqParams(workoutSessionIdSchema),
+  updateWorkoutSession
 );
 
 export default workoutPlanSessionRouter;
