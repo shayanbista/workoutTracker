@@ -1,10 +1,6 @@
 import Joi from 'joi';
 
 const createWorkoutLogSchema = Joi.object({
-  userId: Joi.number()
-    .integer()
-    .positive()
-    .required(),
   workoutPlanId: Joi.number()
     .integer()
     .positive()

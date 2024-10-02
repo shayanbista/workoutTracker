@@ -41,6 +41,7 @@ export const addWorkoutLog = async (workoutLog: WorkoutLogInput) => {
       const requestDate = workoutLog.logDate ? dayjs(workoutLog.logDate).startOf('day') : dayjs().startOf('day');
   
       const workoutPlanExists = await workoutPlanService.findPlanById(workoutLog.workoutPlanId);
+      if(!workoutPlanExists) throw new BadRequestError("the workout plan doesnt exist");
       
       const lastWorkoutLog = await getWorkoutLog(workoutLog.userId, workoutLog.workoutPlanId);
   
@@ -53,7 +54,7 @@ export const addWorkoutLog = async (workoutLog: WorkoutLogInput) => {
           throw new BadRequestError("workout log not allowed");
         }
       }
-  
+
       const newLog = await createworkoutPlan(workoutLog);
       return newLog;
   
