@@ -1,4 +1,3 @@
-
 # Workout Tracker API
 
 This is a Workout Tracker API built with Node.js, Express, and TypeScript. It allows users to manage workout plans, exercises, workout sessions, and logs.
@@ -7,7 +6,7 @@ This is a Workout Tracker API built with Node.js, Express, and TypeScript. It al
 
 - [Node.js](https://nodejs.org/en/download/) (version 14.x or higher)
 - [npm](https://www.npmjs.com/) or [yarn](https://yarnpkg.com/)
-- [PostgreSQL](https://www.postgresql.org/) 
+- [PostgreSQL](https://www.postgresql.org/)
 
 ## Project Setup
 

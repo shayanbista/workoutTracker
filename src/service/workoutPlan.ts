@@ -19,7 +19,6 @@ const findById = async (id: string) => {
     where: {
       id,
     },
-    
   });
 };
 
@@ -30,7 +29,7 @@ const getAll = (userId: number) => {
         id: userId,
       },
     },
-    relations: ["user","workoutPlanExercises","workoutSessions"],
+    relations: ["user", "workoutPlanExercises", "workoutSessions"],
   });
 };
 
@@ -42,7 +41,7 @@ const getById = (id: number, userId: number) => {
         id: userId,
       },
     },
-    relations: ["user","workoutPlanExercises","workoutSessions"],
+    relations: ["user", "workoutPlanExercises", "workoutSessions"],
   });
 };
 

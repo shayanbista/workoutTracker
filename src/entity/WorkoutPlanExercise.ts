@@ -10,7 +10,7 @@ import { WorkoutPlan } from "./WorkoutPlan";
 import { Exercise } from "./Exercises";
 
 @Entity({ name: "workout_plan_exercises" })
-export class WorkoutPlanExercise{
+export class WorkoutPlanExercise {
   @PrimaryGeneratedColumn()
   id: string;
   @Column()

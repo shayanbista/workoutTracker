@@ -44,7 +44,7 @@ export class WorkoutPlan {
     (workoutSession) => workoutSession.workoutPlan,
   )
   workoutSessions: WorkoutSession[];
-  
+
   @OneToMany(() => WorkoutLog, (workoutLog) => workoutLog.workoutPlan)
-  workoutLogs: WorkoutLog[];  
+  workoutLogs: WorkoutLog[];
 }

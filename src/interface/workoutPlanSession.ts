@@ -1,5 +1,4 @@
-
-export interface WorkoutSession{
-    comments: string;        
-    scheduledAt: string;    
-  }
+export interface WorkoutSession {
+  comments: string;
+  scheduledAt: string;
+}

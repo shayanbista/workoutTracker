@@ -5,7 +5,7 @@ import authRoutes from "./auth";
 import exerciseRoutes from "./exercise";
 import workoutPlanRoutes from "./workoutPlan";
 import workoutPlanExerciseRoutes from "./workoutPlanExerise";
-import workoutPlanSessionRoutes from "./workoutPlanSession"
+import workoutPlanSessionRoutes from "./workoutPlanSession";
 import workoutLogRoutes from "./workoutLog";
 
 const router = Router();

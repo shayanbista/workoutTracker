@@ -22,7 +22,8 @@ export const addWorkoutPlan = async (
     const plan = { userId, name: name };
     const addPlan = await workOutPlanService.addPlan(plan);
     res.status(httpStatusCodes.CREATED).json("created successfully");
-  } catch (err) {workoutPlanController
+  } catch (err) {
+    workoutPlanController;
     next(err);
   }
 };
