@@ -17,3 +17,15 @@ export const addWorkoutLog = async (req: Request, res: Response, next: NextFunct
     next(err); 
   }
 };
+
+
+export const getUserReport=async(req: Request, res: Response, next: NextFunction)=>{
+  try{
+    const userId=req.user?.id!;
+    const report=await workoutLogService.userReport(userId)
+    res.status(httpStatusCodes.OK).json(report);
+  }catch(err){
+    next(err)
+  }
+
+}

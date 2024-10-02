@@ -12,12 +12,11 @@ const workoutPlanSessionService = loggerWithNameSpace("workoutPlanSessionService
 
 const workoutSessionRepository=AppDataSource.getRepository(WorkoutSession)
 
-const workoutSessionExist = async (scheduledAt: Date, workPlanId: string): Promise<boolean> => {
+const workoutSessionExist = async (scheduledAt: Date): Promise<boolean> => {
 
     const existingSession = await workoutSessionRepository.findOne({
       where: {
-        scheduledAt: scheduledAt,
-        workoutPlan: { id: workPlanId }, 
+        scheduledAt: scheduledAt
       },
     });
   
@@ -42,7 +41,7 @@ export const addWorkoutSession = async (
     workPlanId:number,sessionInformation:WorkoutSession
   ) => {
 
-    const sessionExists=await workoutSessionExist(sessionInformation.scheduledAt,workPlanId.toString());
+    const sessionExists=await workoutSessionExist(sessionInformation.scheduledAt);
     if(sessionExists) throw new BadRequestError("session already exists and cant be created");
 
     const createSession= await newSession(sessionInformation,workPlanId.toString());

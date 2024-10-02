@@ -8,6 +8,7 @@ import { User } from "../entity/User";
 import { WorkoutPlan } from "../entity/WorkoutPlan";
 
 import * as workoutPlanService from "./workoutPlan";
+import { Between } from "typeorm";
 
 const workoutLogRepository = AppDataSource.getRepository(WorkoutLog);
 
@@ -22,6 +23,21 @@ const getWorkoutLog=async(userId:number, workoutPlanId:number)=>{
     relations:["user","workoutPlan"]
 })
 }
+
+
+const checkDuplicateWorkoutLogForDay = async (userId: number, logDate: Date) => {
+    const startOfDay = dayjs(logDate).startOf('day').toDate();  
+    const endOfDay = dayjs(logDate).endOf('day').toDate();     
+  
+    return await workoutLogRepository.findOne({
+      where: {
+        user: { id: userId },
+        logDate: Between(startOfDay, endOfDay),  
+      },
+      relations: ['user', 'workoutPlan'],
+    });
+  };
+  
 
 const createworkoutPlan=async(workoutLog:WorkoutLogInput)=>{
 
@@ -42,6 +58,11 @@ export const addWorkoutLog = async (workoutLog: WorkoutLogInput) => {
   
       const workoutPlanExists = await workoutPlanService.findPlanById(workoutLog.workoutPlanId);
       if(!workoutPlanExists) throw new BadRequestError("the workout plan doesnt exist");
+
+      const duplicateWorkoutLogForDay = await checkDuplicateWorkoutLogForDay(workoutLog.userId, workoutLog.logDate);
+      if (duplicateWorkoutLogForDay) {
+        throw new ConflictError("A workout log already exists for this day");
+      }
       
       const lastWorkoutLog = await getWorkoutLog(workoutLog.userId, workoutLog.workoutPlanId);
   
@@ -61,7 +82,28 @@ export const addWorkoutLog = async (workoutLog: WorkoutLogInput) => {
     } catch (err) {
       throw err;
     }
+};
+
+const getWorkoutLogsForLast7Days = async (userId: number) => {
+    const sevenDaysAgo = dayjs().subtract(7, 'day').startOf('day');
+    const today = dayjs().endOf('day');
+
+    const workoutLogs = await workoutLogRepository.find({
+      where: {
+        user: { id: userId },
+        logDate: Between(sevenDaysAgo.toDate(), today.toDate()),
+      },
+      relations: ['workoutPlan'],
+    });
+  
+    return workoutLogs;
   };
 
+export const userReport=async(userId:number)=>{
+
+    const report=await getWorkoutLogsForLast7Days(userId);
+    console.log("report",report)
 
 
+}
+  
