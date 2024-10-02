@@ -14,8 +14,7 @@ This is a Workout Tracker API built with Node.js, Express, and TypeScript. It al
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/yourusername/your-repo.git
-cd your-repo
+git clone https://github.com/shayanbista/workoutTracker.git
 ```
 
 ### 2. Install dependencies
