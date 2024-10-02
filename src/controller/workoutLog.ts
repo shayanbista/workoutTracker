@@ -57,8 +57,7 @@ import { http } from 'winston';
 
 export const addWorkoutLog = async (req: Request, res: Response, next: NextFunction) => {   
   try {
-    const { userId, workoutPlanId, logDate } = req.body; 
-
+    
     const workLog=await workoutLogService.addWorkoutLog(req.body);
     res.status(httpStatusCodes.OK).json("created successfully");
 

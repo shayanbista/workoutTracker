@@ -7,6 +7,8 @@ import { ConflictError } from "../error/ConflictError";
 import { User } from "../entity/User";
 import { WorkoutPlan } from "../entity/WorkoutPlan";
 
+import * as workoutPlanService from "./workoutPlan";
+
 const workoutLogRepository = AppDataSource.getRepository(WorkoutLog);
 
 
@@ -34,28 +36,31 @@ const createworkoutPlan=async(workoutLog:WorkoutLogInput)=>{
 
 }
 
-export const addWorkoutLog=async(workoutLog:WorkoutLogInput )=>{
-    const requestDate = workoutLog.logDate ? dayjs(workoutLog.logDate).startOf('day') : dayjs().startOf('day');
-    const lastWorkoutLog = await  getWorkoutLog(workoutLog.userId, workoutLog.workoutPlanId);
-
-    // Check if lastWorkoutLog exists
-    if (lastWorkoutLog) {
-      const lastLogDate = dayjs(lastWorkoutLog.logDate).startOf('day');
-      const nextAllowedDate = lastLogDate.add(1, 'day'); 
-      console.log("lastLogDate:", lastLogDate.toString(), "nextAllowedDate:", nextAllowedDate.toString());
-
-      // Check if the current logDate is allowed
-      if (dayjs(workoutLog.logDate).isBefore(nextAllowedDate)) {
-         throw new BadRequestError("workout log not allowed");
+export const addWorkoutLog = async (workoutLog: WorkoutLogInput) => {
+    try {
+      const requestDate = workoutLog.logDate ? dayjs(workoutLog.logDate).startOf('day') : dayjs().startOf('day');
+  
+      const workoutPlanExists = await workoutPlanService.findPlanById(workoutLog.workoutPlanId);
+      
+      const lastWorkoutLog = await getWorkoutLog(workoutLog.userId, workoutLog.workoutPlanId);
+  
+      if (lastWorkoutLog) {
+        const lastLogDate = dayjs(lastWorkoutLog.logDate).startOf('day');
+        const nextAllowedDate = lastLogDate.add(1, 'day'); 
+  
+        if (dayjs(workoutLog.logDate).isBefore(nextAllowedDate)) {
+          console.log("workout is not allowed");
+          throw new BadRequestError("workout log not allowed");
+        }
       }
+  
+      const newLog = await createworkoutPlan(workoutLog);
+      return newLog;
+  
+    } catch (err) {
+      throw err;
     }
-
-    const newLog= await createworkoutPlan(workoutLog);
-
-    return true
-
-
-}
+  };
 
 
 

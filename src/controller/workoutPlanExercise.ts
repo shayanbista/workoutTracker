@@ -5,8 +5,6 @@ import { Response, NextFunction } from "express";
 
 import loggerWithNameSpace from "../utils/logger";
 
-import * as workoutPlanService from "../service/workoutPlan";
-
 import * as workoutPlanExerciseService from "../service/workoutPlanExercise";
 
 const workoutPlanExerciseController = loggerWithNameSpace(
