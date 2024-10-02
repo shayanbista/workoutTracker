@@ -24,10 +24,12 @@ const workoutSessionExist = async (scheduledAt: Date): Promise<boolean> => {
   return !!existingSession;
 };
 
-const createSession = async (
-  sessionInformation: WorkoutSession,
-  workPlanId: string,
-) => {};
+const updateSession=async(
+  sesssionId: string,sessionInformation: WorkoutSession)=>{
+    await workoutSessionRepository.update(sesssionId,sessionInformation);
+
+}
+
 
 const newSession = async (
   sessionInformation: WorkoutSession,
@@ -57,6 +59,21 @@ export const addWorkoutSession = async (
 
   return true;
 };
+
+
+export const updateWorkoutSession=async(sessionId:number,sessionInfomation:WorkoutSession)=>{
+
+  const sessionExists = await workoutSessionExist(
+    sessionInfomation.scheduledAt,
+  );
+
+  if (sessionExists) throw new BadRequestError("session already exists and cant be created");
+
+  const updated=await updateSession(sessionId.toString(),sessionInfomation);
+  
+  return true;
+
+}
 
 export const deleteSession = async (workSessionId: number) => {
   const sessionExists =

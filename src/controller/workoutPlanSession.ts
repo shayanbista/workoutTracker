@@ -44,3 +44,19 @@ export const removeWorkoutSession = async (
     next(err);
   }
 };
+
+
+export const updateWorkoutSession = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    workoutPlanSessionController.info("updating workout plan for the user");
+    const workoutSessionId = req.params.id;
+    const updateSession = await workoutSession.updateWorkoutSession(workoutSessionId,req.body);
+    res.status(httpStatusCodes.CREATED).json("updated successfully");
+  } catch (err) {
+    next(err);
+  }
+};

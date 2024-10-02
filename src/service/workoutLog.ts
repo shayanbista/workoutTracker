@@ -109,5 +109,5 @@ const getWorkoutLogsForLast7Days = async (userId: number) => {
 
 export const userReport = async (userId: number) => {
   const report = await getWorkoutLogsForLast7Days(userId);
-  console.log("report", report);
+  return report;
 };
