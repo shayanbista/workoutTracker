@@ -7,7 +7,7 @@ This is a Workout Tracker API built with Node.js, Express, and TypeScript. It al
 
 - [Node.js](https://nodejs.org/en/download/) (version 14.x or higher)
 - [npm](https://www.npmjs.com/) or [yarn](https://yarnpkg.com/)
-- [PostgreSQL](https://www.postgresql.org/) (or another supported database)
+- [PostgreSQL](https://www.postgresql.org/) 
 
 ## Project Setup
 
