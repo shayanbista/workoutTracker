@@ -1,9 +1,9 @@
 export interface IWorkoutPlanExercise {
-  id: string;
+  id: string | number;
   sets: number;
   reps: number;
   weight: number;
-  workoutPlanId: number;
+  workoutPlanId: number ;
   exerciseId: number;
   updatedSets: number;
   updatedReps: number;
