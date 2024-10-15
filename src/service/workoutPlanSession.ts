@@ -8,13 +8,13 @@ import { BadRequestError } from "../error/BadRequestError";
 import { Session } from "inspector";
 import { WorkoutPlan } from "../entity/WorkoutPlan";
 
-const workoutPlanSessionService = loggerWithNameSpace(
+export const workoutPlanSessionService = loggerWithNameSpace(
   "workoutPlanSessionService",
 );
 
-const workoutSessionRepository = AppDataSource.getRepository(WorkoutSession);
+export const workoutSessionRepository = AppDataSource.getRepository(WorkoutSession);
 
-const workoutSessionExist = async (scheduledAt: Date): Promise<boolean> => {
+export const workoutSessionExist = async (scheduledAt: Date): Promise<boolean> => {
   const existingSession = await workoutSessionRepository.findOne({
     where: {
       scheduledAt: scheduledAt,
@@ -24,14 +24,14 @@ const workoutSessionExist = async (scheduledAt: Date): Promise<boolean> => {
   return !!existingSession;
 };
 
-const updateSession=async(
+export const updateSession=async(
   sesssionId: string,sessionInformation: WorkoutSession)=>{
     await workoutSessionRepository.update(sesssionId,sessionInformation);
 
 }
 
 
-const newSession = async (
+export const newSession = async (
   sessionInformation: WorkoutSession,
   workPlanId: string,
 ) => {
