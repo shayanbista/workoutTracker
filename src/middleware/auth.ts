@@ -14,12 +14,12 @@ export const authenticate = (
   next: NextFunction,
 ) => {
   const { authorization } = req.headers;
-  
-    if (!authorization) {
-      next(new UnauthenticatedError("Unauthenticated"));
-      return;
-    }
-  
+
+  if (!authorization) {
+    next(new UnauthenticatedError("Unauthenticated"));
+    return;
+  }
+
   const token = authorization.split(" ");
 
   if (token.length !== 2 || token[0] !== "Bearer") {

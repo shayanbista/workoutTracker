@@ -10,9 +10,9 @@ import { WorkoutPlan } from "../entity/WorkoutPlan";
 import * as workoutPlanService from "./workoutPlan";
 import { Between } from "typeorm";
 
-const workoutLogRepository = AppDataSource.getRepository(WorkoutLog);
+export const workoutLogRepository = AppDataSource.getRepository(WorkoutLog);
 
-const getWorkoutLog = async (userId: number, workoutPlanId: number) => {
+export const getWorkoutLog = async (userId: number, workoutPlanId: number) => {
   return await workoutLogRepository.findOne({
     where: {
       user: {
@@ -24,7 +24,7 @@ const getWorkoutLog = async (userId: number, workoutPlanId: number) => {
   });
 };
 
-const checkDuplicateWorkoutLogForDay = async (
+export const checkDuplicateWorkoutLogForDay = async (
   userId: number,
   logDate: Date,
 ) => {
@@ -40,7 +40,7 @@ const checkDuplicateWorkoutLogForDay = async (
   });
 };
 
-const createworkoutPlan = async (workoutLog: WorkoutLogInput) => {
+export const createworkoutPlan = async (workoutLog: WorkoutLogInput) => {
   const newWorkout = new WorkoutLog();
   newWorkout.logDate = workoutLog.logDate;
   newWorkout.notes = workoutLog.notes!;
@@ -92,7 +92,7 @@ export const addWorkoutLog = async (workoutLog: WorkoutLogInput) => {
   }
 };
 
-const getWorkoutLogsForLast7Days = async (userId: number) => {
+export const getWorkoutLogsForLast7Days = async (userId: number) => {
   const sevenDaysAgo = dayjs().subtract(7, "day").startOf("day");
   const today = dayjs().endOf("day");
 

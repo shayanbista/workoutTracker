@@ -1,13 +1,10 @@
 import assert from "assert";
 import sinon from "sinon";
-import * as workoutPlanService from "../../service/workoutPlan";
-import * as workoutPlanExerciseService from "../../service/workoutPlanExercise";
-import * as workoutPlanSessionService from "../../service/workoutPlanSession";
-import { WorkoutPlan } from "../../entity/WorkoutPlan";
-import { WorkoutPlanExercise } from "../../entity/WorkoutPlanExercise";
-import { WorkoutSession } from "../../entity/WorkoutPlanSession";
-import { BadRequestError } from "../../error/BadRequestError";
-import { AppDataSource } from "../../dataSource";
+import * as workoutPlanService from "../../../service/workoutPlan";
+import { WorkoutPlan } from "../../../entity/WorkoutPlan";
+import { BadRequestError } from "../../../error/BadRequestError";
+import { AppDataSource } from "../../../dataSource";
+import { mockWorkoutPlan } from "../testData/workoutPlan.test";
 
 describe("Workout Services", () => {
   let findStub: sinon.SinonStub;
@@ -16,36 +13,18 @@ describe("Workout Services", () => {
   let softDeleteStub: sinon.SinonStub;
   let updateStub: sinon.SinonStub;
 
-  const mockWorkoutPlan: any = {
-    id: "1",
-    name: "Test Plan",
-    user: { id: 1 },
-    workoutPlanExercises: [],
-    workoutSessions: [],
-  };
-
-  const mockWorkoutPlanExercise: any = {
-    id: 1,
-    reps: 10,
-    sets: 3,
-    weight: 50,
-    exercise: { id: 1 },
-    workoutPlan: { id: "1" },
-  };
-
-  const mockWorkoutSession: any = {
-    id: 1,
-    comments: "Test session",
-    scheduledAt: new Date(),
-    workoutPlan: { id: "1" },
-  };
-
   beforeEach(() => {
     // Stubbing the repository methods
     findStub = sinon.stub(AppDataSource.getRepository(WorkoutPlan), "find");
-    findOneStub = sinon.stub(AppDataSource.getRepository(WorkoutPlan), "findOne");
+    findOneStub = sinon.stub(
+      AppDataSource.getRepository(WorkoutPlan),
+      "findOne",
+    );
     saveStub = sinon.stub(AppDataSource.getRepository(WorkoutPlan), "save");
-    softDeleteStub = sinon.stub(AppDataSource.getRepository(WorkoutPlan), "softDelete");
+    softDeleteStub = sinon.stub(
+      AppDataSource.getRepository(WorkoutPlan),
+      "softDelete",
+    );
     updateStub = sinon.stub(AppDataSource.getRepository(WorkoutPlan), "update");
   });
 
@@ -63,7 +42,10 @@ describe("Workout Services", () => {
           await workoutPlanService.addPlan({ name: "Test Plan", userId: 1 });
           assert.fail("Expected BadRequestError to be thrown");
         } catch (error) {
-          assert(error instanceof BadRequestError, "Expected a BadRequestError");
+          assert(
+            error instanceof BadRequestError,
+            "Expected a BadRequestError",
+          );
           assert.strictEqual(error.message, "plan already exists");
         }
 
@@ -74,7 +56,10 @@ describe("Workout Services", () => {
         findOneStub.resolves(null);
         saveStub.resolves(mockWorkoutPlan);
 
-        const result = await workoutPlanService.addPlan({ name: "Test Plan", userId: 1 });
+        const result = await workoutPlanService.addPlan({
+          name: "Test Plan",
+          userId: 1,
+        });
         assert.strictEqual(result, true, "Expected result to be true");
 
         sinon.assert.calledOnce(findOneStub);
@@ -88,7 +73,10 @@ describe("Workout Services", () => {
 
         const plans = await workoutPlanService.getAllPlans(1);
         assert(Array.isArray(plans), "Expected result to be an array");
-        assert(plans.includes(mockWorkoutPlan), "Expected array to include mockWorkoutPlan");
+        assert(
+          plans.includes(mockWorkoutPlan),
+          "Expected array to include mockWorkoutPlan",
+        );
 
         sinon.assert.calledOnce(findStub);
       });
@@ -100,7 +88,10 @@ describe("Workout Services", () => {
           await workoutPlanService.getAllPlans(1);
           assert.fail("Expected BadRequestError to be thrown");
         } catch (error) {
-          assert(error instanceof BadRequestError, "Expected a BadRequestError");
+          assert(
+            error instanceof BadRequestError,
+            "Expected a BadRequestError",
+          );
           assert.strictEqual(error.message, "no existing plans of the user");
         }
 
@@ -108,5 +99,4 @@ describe("Workout Services", () => {
       });
     });
   });
-
 });

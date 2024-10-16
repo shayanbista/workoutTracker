@@ -1,9 +1,8 @@
 import sinon from "sinon";
 import assert from "assert";
-import * as workoutPlanSessionService from "../../service/workoutPlanSession";
-import * as workoutSessionRepository from "../../service/workoutPlanSession"
-import { BadRequestError } from "../../error/BadRequestError";
-import { WorkoutSession } from "../../entity/WorkoutPlanSession";
+import * as workoutPlanSessionService from "../../../service/workoutPlanSession";
+import { BadRequestError } from "../../../error/BadRequestError";
+import { WorkoutSession } from "../../../entity/WorkoutPlanSession";
 
 describe("WorkoutPlanSessionService", () => {
   const mockSession = new WorkoutSession();
@@ -27,7 +26,7 @@ describe("WorkoutPlanSessionService", () => {
         assert(error instanceof BadRequestError, "Expected BadRequestError");
         assert.strictEqual(
           error.message,
-          "session already exists and cant be created"
+          "session already exists and cant be created",
         );
       }
 
@@ -39,10 +38,15 @@ describe("WorkoutPlanSessionService", () => {
         .stub(workoutPlanSessionService, "workoutSessionExist")
         .resolves(false);
 
-      const newSessionStub = sinon.stub(workoutPlanSessionService, "newSession").resolves();
+      const newSessionStub = sinon
+        .stub(workoutPlanSessionService, "newSession")
+        .resolves();
 
-      const result = await workoutPlanSessionService.addWorkoutSession(1, mockSession);
-      
+      const result = await workoutPlanSessionService.addWorkoutSession(
+        1,
+        mockSession,
+      );
+
       assert.strictEqual(result, true);
       assert(sessionExistStub.calledOnce);
       assert(newSessionStub.calledOnce);
@@ -62,7 +66,7 @@ describe("WorkoutPlanSessionService", () => {
         assert(error instanceof BadRequestError, "Expected BadRequestError");
         assert.strictEqual(
           error.message,
-          "session already exists and cant be created"
+          "session already exists and cant be created",
         );
       }
 
@@ -74,15 +78,18 @@ describe("WorkoutPlanSessionService", () => {
         .stub(workoutPlanSessionService, "workoutSessionExist")
         .resolves(false);
 
-      const updateSessionStub = sinon.stub(workoutPlanSessionService, "updateSession").resolves();
+      const updateSessionStub = sinon
+        .stub(workoutPlanSessionService, "updateSession")
+        .resolves();
 
-      const result = await workoutPlanSessionService.updateWorkoutSession(1, mockSession);
+      const result = await workoutPlanSessionService.updateWorkoutSession(
+        1,
+        mockSession,
+      );
 
       assert.strictEqual(result, true);
       assert(sessionExistStub.calledOnce);
       assert(updateSessionStub.calledOnce);
     });
   });
-
-
 });

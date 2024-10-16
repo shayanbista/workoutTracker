@@ -6,7 +6,8 @@
   "scripts": {
     "start": "nodemon src/index.ts",
     "format": "prettier --write .",
-    "test": "mocha --require ts-node/register 'src/tests/unit_test/**/*.test.ts' ",
+    "test": "mocha --require ts-node/register 'src/tests/unit_test/testFile/**/*.test.ts' ",
+    "test:integration": "mocha --require ts-node/register 'src/tests/integration_test/**/*.test.ts' ",
     "typeorm": "ts-node ./node_modules/typeorm/cli.js",
     "migration:run": "ts-node ./node_modules/typeorm/cli.js migration:run -d ./src/dataSource.ts",
     "migration:revert": "ts-node ./node_modules/typeorm/cli.js migration:revert -d ./src/dataSource.ts",

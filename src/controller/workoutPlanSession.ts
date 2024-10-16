@@ -45,7 +45,6 @@ export const removeWorkoutSession = async (
   }
 };
 
-
 export const updateWorkoutSession = async (
   req: Request,
   res: Response,
@@ -54,7 +53,10 @@ export const updateWorkoutSession = async (
   try {
     workoutPlanSessionController.info("updating workout plan for the user");
     const workoutSessionId = req.params.id;
-    const updateSession = await workoutSession.updateWorkoutSession(workoutSessionId,req.body);
+    const updateSession = await workoutSession.updateWorkoutSession(
+      workoutSessionId,
+      req.body,
+    );
     res.status(httpStatusCodes.CREATED).json("updated successfully");
   } catch (err) {
     next(err);

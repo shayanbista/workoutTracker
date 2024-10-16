@@ -39,7 +39,9 @@ export function genericErrorHandler(
   }
 
   const errorType = Object.keys(errorClassMapping).find(
-    (type) => error instanceof errorClassMapping[type as keyof typeof errorClassMapping]
+    (type) =>
+      error instanceof
+      errorClassMapping[type as keyof typeof errorClassMapping],
   );
 
   if (errorType) {
@@ -52,4 +54,3 @@ export function genericErrorHandler(
     message: "Internal server error",
   });
 }
-

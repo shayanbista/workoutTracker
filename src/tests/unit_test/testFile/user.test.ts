@@ -1,18 +1,14 @@
 import sinon from "sinon";
-import { exercisesRepository } from "../../service/exercise";
-import { Exercise } from "../../entity/Exercises";
-import * as exerciseService from "../../service/exercise";
-import { BadRequestError } from "../../error/BadRequestError";
+import { exercisesRepository } from "../../../service/exercise";
+import { Exercise } from "../../../entity/Exercises";
+import * as exerciseService from "../../../service/exercise";
+import { BadRequestError } from "../../../error/BadRequestError";
+import { mockExercise } from "../testData/exercise.test";
 
 describe("Exercise Service", () => {
-  let exerciseRepositoryStub: sinon.SinonStubbedInstance<typeof exercisesRepository>;
-
-  const mockExercise = {
-    id: 1,
-    name: "Push Up",
-    type: "Strength",
-    description: "An exercise for chest and arms",
-  } as Exercise;
+  let exerciseRepositoryStub: sinon.SinonStubbedInstance<
+    typeof exercisesRepository
+  >;
 
   beforeEach(() => {
     exerciseRepositoryStub = sinon.stub(exercisesRepository);
@@ -31,7 +27,9 @@ describe("Exercise Service", () => {
       if (JSON.stringify(result) !== JSON.stringify(mockExercise)) {
         throw new Error("Expected result to match mockExercise");
       }
-      sinon.assert.calledOnceWithExactly(exerciseRepositoryStub.findOne, { where: { id: 1 } });
+      sinon.assert.calledOnceWithExactly(exerciseRepositoryStub.findOne, {
+        where: { id: 1 },
+      });
     });
 
     it("should throw BadRequestError if exercise doesn't exist", async () => {
@@ -82,7 +80,7 @@ describe("Exercise Service", () => {
 
   describe("newExercise", () => {
     it("should create a new exercise if it doesn't exist", async () => {
-      exerciseRepositoryStub.findOne.resolves(null); // No exercise found with the same name
+      exerciseRepositoryStub.findOne.resolves(null);
       const saveStub = exerciseRepositoryStub.save.resolves(mockExercise);
 
       const result = await exerciseService.newExercise(mockExercise);
@@ -90,12 +88,14 @@ describe("Exercise Service", () => {
       if (result !== true) {
         throw new Error("Expected result to be true");
       }
-      sinon.assert.calledOnceWithExactly(exerciseRepositoryStub.findOne, { where: { name: mockExercise.name } });
+      sinon.assert.calledOnceWithExactly(exerciseRepositoryStub.findOne, {
+        where: { name: mockExercise.name },
+      });
       sinon.assert.calledOnce(saveStub);
     });
 
     it("should throw BadRequestError if exercise with the same name already exists", async () => {
-      exerciseRepositoryStub.findOne.resolves(mockExercise); // Exercise already exists
+      exerciseRepositoryStub.findOne.resolves(mockExercise);
 
       try {
         await exerciseService.newExercise(mockExercise);

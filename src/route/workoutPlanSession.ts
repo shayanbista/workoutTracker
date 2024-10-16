@@ -37,7 +37,7 @@ workoutPlanSessionRouter.put(
   authenticate,
   authorize("workouts.put"),
   validateReqParams(workoutSessionIdSchema),
-  updateWorkoutSession
+  updateWorkoutSession,
 );
 
 export default workoutPlanSessionRouter;

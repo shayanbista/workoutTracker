@@ -1,37 +1,16 @@
 import assert from "assert";
 import sinon from "sinon";
-import * as workoutPlanService from "../../service/workoutPlan";
-import * as workoutPlanExerciseService from "../../service/workoutPlanExercise";
-import * as exerciseService from "../../service/exercise";
-import { AppDataSource } from "../../dataSource";
-import { WorkoutPlanExercise } from "../../entity/WorkoutPlanExercise";
-import { BadRequestError } from "../../error/BadRequestError";
-
-// Corrected mock objects with required fields
-const mockWorkoutPlan:any= {
-  id: "1",
-  name: "Test Plan",
-  createdAt: new Date(),
-  updatedAt: new Date(),
-  deletedAt: null,
-  user: { id: 1, name: "Test User" },
-};
-
-const mockWorkoutPlanExercise = {
-  id: 1,
-  reps: 10,
-  sets: 3,
-  weight: 50,
-  exerciseId: 1,
-  workoutPlanId: 1,
-  updatedSets: 20, 
-  updatedReps: 20,
-};
-
-const mockExercise:any= {
-  id: 1,
-  name: "Test Exercise",
-};
+import * as workoutPlanService from "../../../service/workoutPlan";
+import * as workoutPlanExerciseService from "../../../service/workoutPlanExercise";
+import * as exerciseService from "../../../service/exercise";
+import { AppDataSource } from "../../../dataSource";
+import { WorkoutPlanExercise } from "../../../entity/WorkoutPlanExercise";
+import { BadRequestError } from "../../../error/BadRequestError";
+import { mockExercise } from "../testData/exercise.test";
+import {
+  mockWorkoutPlan,
+  mockWorkoutPlanExercise,
+} from "../testData/workoutPlanExercise.test";
 
 describe("Workout Plan Exercise Service", () => {
   let findOneStub: sinon.SinonStub;
@@ -40,11 +19,22 @@ describe("Workout Plan Exercise Service", () => {
   let updateStub: sinon.SinonStub;
 
   beforeEach(() => {
-    // Stubbing repository methods
-    findOneStub = sinon.stub(AppDataSource.getRepository(WorkoutPlanExercise), "findOne");
-    saveStub = sinon.stub(AppDataSource.getRepository(WorkoutPlanExercise), "save");
-    softDeleteStub = sinon.stub(AppDataSource.getRepository(WorkoutPlanExercise), "softDelete");
-    updateStub = sinon.stub(AppDataSource.getRepository(WorkoutPlanExercise), "update");
+    findOneStub = sinon.stub(
+      AppDataSource.getRepository(WorkoutPlanExercise),
+      "findOne",
+    );
+    saveStub = sinon.stub(
+      AppDataSource.getRepository(WorkoutPlanExercise),
+      "save",
+    );
+    softDeleteStub = sinon.stub(
+      AppDataSource.getRepository(WorkoutPlanExercise),
+      "softDelete",
+    );
+    updateStub = sinon.stub(
+      AppDataSource.getRepository(WorkoutPlanExercise),
+      "update",
+    );
   });
 
   afterEach(() => {
@@ -56,7 +46,9 @@ describe("Workout Plan Exercise Service", () => {
       sinon.stub(workoutPlanService, "findPlanById").resolves(null);
 
       try {
-        await workoutPlanExerciseService.addWorkoutPlanExercises(mockWorkoutPlanExercise);
+        await workoutPlanExerciseService.addWorkoutPlanExercises(
+          mockWorkoutPlanExercise,
+        );
         assert.fail("Expected BadRequestError to be thrown");
       } catch (error) {
         assert(error instanceof BadRequestError, "Expected a BadRequestError");
@@ -70,11 +62,16 @@ describe("Workout Plan Exercise Service", () => {
       findOneStub.resolves(mockWorkoutPlanExercise);
 
       try {
-        await workoutPlanExerciseService.addWorkoutPlanExercises(mockWorkoutPlanExercise);
+        await workoutPlanExerciseService.addWorkoutPlanExercises(
+          mockWorkoutPlanExercise,
+        );
         assert.fail("Expected BadRequestError to be thrown");
       } catch (error) {
         assert(error instanceof BadRequestError, "Expected a BadRequestError");
-        assert.strictEqual(error.message, "This exercise is already in the workout plan");
+        assert.strictEqual(
+          error.message,
+          "This exercise is already in the workout plan",
+        );
       }
 
       sinon.assert.calledOnce(findOneStub);
@@ -86,7 +83,9 @@ describe("Workout Plan Exercise Service", () => {
       findOneStub.resolves(null);
       saveStub.resolves(mockWorkoutPlanExercise);
 
-      const result = await workoutPlanExerciseService.addWorkoutPlanExercises(mockWorkoutPlanExercise);
+      const result = await workoutPlanExerciseService.addWorkoutPlanExercises(
+        mockWorkoutPlanExercise,
+      );
       assert.strictEqual(result, true, "Expected result to be true");
 
       sinon.assert.calledOnce(saveStub);
@@ -98,7 +97,9 @@ describe("Workout Plan Exercise Service", () => {
       sinon.stub(workoutPlanService, "findPlanById").resolves(null);
 
       try {
-        await workoutPlanExerciseService.removeWorkoutPlanExercises(mockWorkoutPlanExercise);
+        await workoutPlanExerciseService.removeWorkoutPlanExercises(
+          mockWorkoutPlanExercise,
+        );
         assert.fail("Expected BadRequestError to be thrown");
       } catch (error) {
         assert(error instanceof BadRequestError, "Expected a BadRequestError");
@@ -111,7 +112,9 @@ describe("Workout Plan Exercise Service", () => {
       findOneStub.resolves(null);
 
       try {
-        await workoutPlanExerciseService.removeWorkoutPlanExercises(mockWorkoutPlanExercise);
+        await workoutPlanExerciseService.removeWorkoutPlanExercises(
+          mockWorkoutPlanExercise,
+        );
         assert.fail("Expected BadRequestError to be thrown");
       } catch (error) {
         assert(error instanceof BadRequestError, "Expected a BadRequestError");
@@ -126,7 +129,10 @@ describe("Workout Plan Exercise Service", () => {
       findOneStub.resolves(mockWorkoutPlanExercise);
       softDeleteStub.resolves({ affected: 1 });
 
-      const result = await workoutPlanExerciseService.removeWorkoutPlanExercises(mockWorkoutPlanExercise);
+      const result =
+        await workoutPlanExerciseService.removeWorkoutPlanExercises(
+          mockWorkoutPlanExercise,
+        );
       assert.strictEqual(result, undefined, "Expected undefined as result");
 
       sinon.assert.calledOnce(softDeleteStub);
@@ -138,7 +144,9 @@ describe("Workout Plan Exercise Service", () => {
       sinon.stub(workoutPlanService, "findPlanById").resolves(null);
 
       try {
-        await workoutPlanExerciseService.updateWorkoutPlanExercises(mockWorkoutPlanExercise);
+        await workoutPlanExerciseService.updateWorkoutPlanExercises(
+          mockWorkoutPlanExercise,
+        );
         assert.fail("Expected BadRequestError to be thrown");
       } catch (error) {
         assert(error instanceof BadRequestError, "Expected a BadRequestError");
@@ -151,7 +159,9 @@ describe("Workout Plan Exercise Service", () => {
       findOneStub.resolves(null);
 
       try {
-        await workoutPlanExerciseService.updateWorkoutPlanExercises(mockWorkoutPlanExercise);
+        await workoutPlanExerciseService.updateWorkoutPlanExercises(
+          mockWorkoutPlanExercise,
+        );
         assert.fail("Expected BadRequestError to be thrown");
       } catch (error) {
         assert(error instanceof BadRequestError, "Expected a BadRequestError");
@@ -164,7 +174,10 @@ describe("Workout Plan Exercise Service", () => {
       findOneStub.resolves(mockWorkoutPlanExercise);
       updateStub.resolves({ affected: 1 });
 
-      const result = await workoutPlanExerciseService.updateWorkoutPlanExercises(mockWorkoutPlanExercise);
+      const result =
+        await workoutPlanExerciseService.updateWorkoutPlanExercises(
+          mockWorkoutPlanExercise,
+        );
       assert.strictEqual(result, true, "Expected result to be true");
 
       sinon.assert.calledOnce(updateStub);

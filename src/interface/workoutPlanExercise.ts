@@ -3,7 +3,7 @@ export interface IWorkoutPlanExercise {
   sets: number;
   reps: number;
   weight: number;
-  workoutPlanId: number ;
+  workoutPlanId: number;
   exerciseId: number;
   updatedSets: number;
   updatedReps: number;
