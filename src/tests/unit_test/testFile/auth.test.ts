@@ -13,13 +13,11 @@ describe("login function", () => {
 
 
   beforeEach(() => {
-    // Stub methods
     userServiceStub = sinon.stub(userService, "findByEmail").resolves(mockUser);
     sinon.stub(userService, "getUser").resolves(mockUser);
     comparePasswordStub = sinon.stub().resolves(true);
     jwtSignStub = sinon.stub().returns("token");
 
-    // Replace the original functions with stubs
     (userService as any).findByEmail = userServiceStub;
     (userService as any).getUser = sinon.stub().resolves(mockUser);
     (comparePassword as any) = comparePasswordStub;
