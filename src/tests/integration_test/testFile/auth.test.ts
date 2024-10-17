@@ -1,20 +1,20 @@
-import { AppDataSource } from "../../dataSource";
+import { AppDataSource } from "../../../dataSource";
 
-import { User } from "../../entity/User";
-import { Role } from "../../entity/Role";
-import { Permission } from "../../entity/Permission";
+import { User } from "../../../entity/User";
+import { Role } from "../../../entity/Role";
+import { Permission } from "../../../entity/Permission";
 
 import assert from "assert";
 import sinon from "sinon";
 
-import * as authService from "../../service/auth";
+import * as authService from "../../../service/auth";
 
-import * as encrypter from "../../utils/encrypter";
+import * as encrypter from "../../../utils/encrypter";
 import * as jwt from "jsonwebtoken";
 
-import config from "../../config";
+import config from "../../../config";
 
-import { BadRequestError } from "../../error/BadRequestError";
+import { BadRequestError } from "../../../error/BadRequestError";
 
 describe("Auth Integration Tests", function () {
   let comparePasswordStub: sinon.SinonStub;

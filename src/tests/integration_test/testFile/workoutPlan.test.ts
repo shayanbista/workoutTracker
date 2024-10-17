@@ -1,12 +1,15 @@
-import { AppDataSource } from "../../dataSource";
-import { User } from "../../entity/User";
-import { WorkoutPlan } from "../../entity/WorkoutPlan";
-import { WorkoutPlanExercise } from "../../entity/WorkoutPlanExercise";
-import { WorkoutSession } from "../../entity/WorkoutPlanSession";
-import { BadRequestError } from "../../error/BadRequestError";
-import * as workoutPlanService from "../../service/workoutPlan";
 import sinon from "sinon";
 import assert from "assert";
+
+import { AppDataSource } from "../../../dataSource";
+
+import { WorkoutPlan } from "../../../entity/WorkoutPlan";
+
+import { WorkoutSession } from "../../../entity/WorkoutPlanSession";
+import { BadRequestError } from "../../../error/BadRequestError";
+import * as workoutPlanService from "../../../service/workoutPlan";
+
+import { mockWorkoutPlan } from "../testData/workoutPlan.test";
 
 interface MockWorkoutSession
   extends Omit<WorkoutSession, "comments" | "deletedAt" | "workoutPlan"> {}
@@ -16,30 +19,6 @@ describe("Workout Plan Service Tests", function () {
   let findStub: sinon.SinonStub;
   let saveStub: sinon.SinonStub;
   let softDeleteStub: sinon.SinonStub;
-
-  const mockUser: Partial<User> = {
-    id: 1,
-    email: "test@example.com",
-    name: "Test User",
-  };
-
-  const mockWorkoutPlanExercises: Partial<WorkoutPlanExercise>[] = [
-    { id: "1", sets: 3, reps: 12 },
-    { id: "2", sets: 4, reps: 10 },
-  ];
-
-  const mockWorkoutSessions: MockWorkoutSession[] = [
-    { id: 1, scheduledAt: new Date() },
-    { id: 2, scheduledAt: new Date() },
-  ];
-
-  const mockWorkoutPlan: Partial<WorkoutPlan> = {
-    id: "1",
-    name: "Test Plan",
-    user: mockUser as User,
-    workoutPlanExercises: mockWorkoutPlanExercises as WorkoutPlanExercise[],
-    workoutSessions: mockWorkoutSessions as WorkoutSession[],
-  };
 
   beforeEach(function () {
     const repository = AppDataSource.getRepository(WorkoutPlan);

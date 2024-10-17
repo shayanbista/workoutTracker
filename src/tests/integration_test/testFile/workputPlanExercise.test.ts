@@ -1,41 +1,30 @@
 import * as sinon from "sinon";
-import { AppDataSource } from "../../dataSource";
-import { WorkoutPlanExercise } from "../../entity/WorkoutPlanExercise";
-import * as workoutPlanService from "../../service/workoutPlan";
-import * as exerciseService from "../../service/exercise";
-import { BadRequestError } from "../../error/BadRequestError";
+
+import assert from "assert";
+
+import { AppDataSource } from "../../../dataSource";
+
+import { WorkoutPlanExercise } from "../../../entity/WorkoutPlanExercise";
+import * as workoutPlanService from "../../../service/workoutPlan";
+import * as exerciseService from "../../../service/exercise";
+
+import { BadRequestError } from "../../../error/BadRequestError";
+
 import {
   addWorkoutPlanExercises,
   removeWorkoutPlanExercises,
   updateWorkoutPlanExercises,
-} from "../../service/workoutPlanExercise";
-import assert from "assert";
+} from "../../../service/workoutPlanExercise";
+
+import {
+  mockExercise,
+  mockWorkoutPlan,
+  mockWorkoutPlanExercise,
+} from "../testData/workoutPlanExercise.test";
 
 describe("Workout Plan Exercise Service Integration Tests", () => {
   let sandbox: sinon.SinonSandbox;
   let repositoryStub: sinon.SinonStubbedInstance<any>;
-
-
-  const mockWorkoutPlan = {
-    id: "123",
-    name: "Test Plan",
-    description: "Test Plan Description",
-  } as any;
-
-
-  const mockExercise = {
-    id: 456,
-    name: "Push Ups",
-    description: "Exercise Description",
-  } as any;
-
-  const mockWorkoutPlanExercise = {
-    workoutPlanId: mockWorkoutPlan.id,
-    exerciseId: mockExercise.id,
-    sets: 3,
-    reps: 12,
-    weight: 70,
-  } as any;
 
   beforeEach(() => {
     sandbox = sinon.createSandbox();
@@ -54,7 +43,7 @@ describe("Workout Plan Exercise Service Integration Tests", () => {
         .stub(workoutPlanService, "findPlanById")
         .resolves(mockWorkoutPlan);
       sandbox.stub(exerciseService, "getExerciseById").resolves(mockExercise);
-      repositoryStub.findOne.resolves(null); 
+      repositoryStub.findOne.resolves(null);
       repositoryStub.save.resolves({ ...mockWorkoutPlanExercise, id: 1 });
 
       const result = await addWorkoutPlanExercises(mockWorkoutPlanExercise);
@@ -109,7 +98,7 @@ describe("Workout Plan Exercise Service Integration Tests", () => {
         .stub(workoutPlanService, "findPlanById")
         .resolves(mockWorkoutPlan);
       sandbox.stub(exerciseService, "getExerciseById").resolves(mockExercise);
-      repositoryStub.findOne.resolves(null); 
+      repositoryStub.findOne.resolves(null);
 
       try {
         await removeWorkoutPlanExercises({
@@ -152,7 +141,7 @@ describe("Workout Plan Exercise Service Integration Tests", () => {
       sandbox
         .stub(workoutPlanService, "findPlanById")
         .resolves(mockWorkoutPlan);
-      repositoryStub.findOne.resolves(null); 
+      repositoryStub.findOne.resolves(null);
 
       try {
         await updateWorkoutPlanExercises(mockWorkoutPlanExercise);

@@ -77,7 +77,6 @@
 
 // main();
 
-
 import { AppDataSource } from "../dataSource";
 import { exerciseSeed } from "./exercisesSeed";
 import { rolesPermissionseed } from "./rolesPermisiionsSeed";
@@ -100,9 +99,19 @@ async function main() {
       const userCount = parseInt(userCountResult[0].count);
 
       if (userCount === 0) {
-        console.log("Users table is empty. Truncating all tables and seeding again.");
-        const tablesToTruncate = ['roles', 'permissions', 'user_roles', 'exercises', 'seed_log']; 
-        const truncatePromises = tablesToTruncate.map(table => AppDataSource.query(`TRUNCATE TABLE ${table} CASCADE`));
+        console.log(
+          "Users table is empty. Truncating all tables and seeding again.",
+        );
+        const tablesToTruncate = [
+          "roles",
+          "permissions",
+          "user_roles",
+          "exercises",
+          "seed_log",
+        ];
+        const truncatePromises = tablesToTruncate.map((table) =>
+          AppDataSource.query(`TRUNCATE TABLE ${table} CASCADE`),
+        );
         await Promise.all(truncatePromises);
         await AppDataSource.query(seedLogInsertQuery, [seedName]);
       } else {
@@ -125,5 +134,3 @@ async function main() {
 }
 
 main();
-
-
