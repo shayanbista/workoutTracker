@@ -1,7 +1,8 @@
 import httpStatusCodes from "http-status-codes";
 
-import { Request } from "../interface/request";
 import { Response, NextFunction } from "express";
+
+import { Request } from "../interface/request";
 
 import loggerWithNameSpace from "../utils/logger";
 

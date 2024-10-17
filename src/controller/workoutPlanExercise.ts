@@ -1,7 +1,8 @@
-import httpStatusCodes, { RESET_CONTENT } from "http-status-codes";
+import httpStatusCodes from "http-status-codes";
+
+import { Response, NextFunction } from "express";
 
 import { Request } from "../interface/request";
-import { Response, NextFunction } from "express";
 
 import loggerWithNameSpace from "../utils/logger";
 

@@ -1,9 +1,10 @@
-import { Request } from "../interface/request";
-import dayjs from "dayjs";
 import httpStatusCodes from "http-status-codes";
+
 import { Response, NextFunction } from "express";
+
+import { Request } from "../interface/request";
+
 import * as workoutLogService from "../service/workoutLog";
-import { http } from "winston";
 
 export const addWorkoutLog = async (
   req: Request,
