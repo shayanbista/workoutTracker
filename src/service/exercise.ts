@@ -1,6 +1,9 @@
 import { AppDataSource } from "../dataSource";
+
 import { Exercise } from "../entity/Exercises";
+
 import { BadRequestError } from "../error/BadRequestError";
+
 import loggerWithNameSpace from "../utils/logger";
 
 const exerciseService = loggerWithNameSpace("exerciseService");

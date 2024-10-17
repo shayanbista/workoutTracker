@@ -1,12 +1,11 @@
+import { AppDataSource } from "../dataSource";
+
 import loggerWithNameSpace from "../utils/logger";
 
-import { AppDataSource } from "../dataSource";
 import { WorkoutSession } from "../entity/WorkoutPlanSession";
-
-import * as workOutPlanService from "../service/workoutPlan";
-import { BadRequestError } from "../error/BadRequestError";
-import { Session } from "inspector";
 import { WorkoutPlan } from "../entity/WorkoutPlan";
+
+import { BadRequestError } from "../error/BadRequestError";
 
 export const workoutPlanSessionService = loggerWithNameSpace(
   "workoutPlanSessionService",

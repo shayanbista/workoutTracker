@@ -1,10 +1,14 @@
-import { User } from "../entity/User";
-import * as roleService from "./role";
 import { AppDataSource } from "../dataSource";
+
+import { User } from "../entity/User";
+
 import { Role } from "../entity/Role";
 import { BadRequestError } from "../error/BadRequestError";
-import { hashPassword } from "../utils/encrypter";
 import { NotFoundError } from "../error/NotFoundError";
+
+import { hashPassword } from "../utils/encrypter";
+
+import * as roleService from "./role";
 
 export const userRepository = AppDataSource.getRepository(User);
 

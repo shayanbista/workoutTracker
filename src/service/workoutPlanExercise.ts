@@ -1,9 +1,12 @@
 import { AppDataSource } from "../dataSource";
+
 import { WorkoutPlan } from "../entity/WorkoutPlan";
-import { BadRequestError } from "../error/BadRequestError";
 import { WorkoutPlanExercise } from "../entity/WorkoutPlanExercise";
-import { IWorkoutPlanExercise } from "../interface/workoutPlanExercise";
 import { Exercise } from "../entity/Exercises";
+
+import { BadRequestError } from "../error/BadRequestError";
+
+import { IWorkoutPlanExercise } from "../interface/workoutPlanExercise";
 
 import * as workoutPlanService from "./workoutPlan";
 import * as exerciseService from "./exercise";

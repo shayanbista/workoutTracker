@@ -1,4 +1,5 @@
 import { AppDataSource } from "../dataSource";
+
 import { Role } from "../entity/Role";
 
 export const roleRepository = AppDataSource.getRepository(Role);

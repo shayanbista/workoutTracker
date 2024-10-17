@@ -1,7 +1,10 @@
 import { AppDataSource } from "../dataSource";
+
 import { User } from "../entity/User";
 import { WorkoutPlan } from "../entity/WorkoutPlan";
+
 import { BadRequestError } from "../error/BadRequestError";
+
 import { Plan } from "../interface/workoutPlan";
 
 const workoutPlanRepository = AppDataSource.getRepository(WorkoutPlan);

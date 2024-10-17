@@ -6,11 +6,6 @@ import config from "../config";
 import { sign } from "jsonwebtoken";
 import { BadRequestError } from "../error/BadRequestError";
 
-interface CustomJwtPayload {
-  email: string;
-  id: string;
-}
-
 export const login = async (body: Pick<User, "email" | "password">) => {
   const existingUser = await userService.findByEmail(body.email);
 
