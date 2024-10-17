@@ -1,7 +1,6 @@
 import assert from "assert";
 import sinon from "sinon";
 import * as exerciseService from "../../../service/exercise";
-import { Exercise } from "../../../entity/Exercises";
 import { BadRequestError } from "../../../error/BadRequestError";
 import { exercisesRepository } from "../../../service/exercise";
 import { mockExercise } from "../testData/exercise.test";

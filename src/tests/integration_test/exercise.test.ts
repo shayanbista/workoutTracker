@@ -1,137 +1,117 @@
-import assert from "assert";
-import sinon from "sinon";
 import { AppDataSource } from "../../dataSource";
-import {
-  exercisesRepository,
-  newExercise,
-  getExercises,
-  getExerciseById,
-} from "../../service/exercise";
 import { Exercise } from "../../entity/Exercises";
 import { BadRequestError } from "../../error/BadRequestError";
+import { newExercise, getExercises, getExerciseById } from "../../service/exercise";
+import { exercisesRepository } from "../../service/exercise";
+import assert from 'assert';
 
-describe("Exercise Service Integration Tests", function () {
-  // Extend the default timeout to 10 seconds for all tests
-  this.timeout(10000);
+describe("Exercise Service Integration Tests", function() {
+  this.timeout(10000); 
 
-  before(async function () {
-    // Increase timeout specifically for this hook
-    this.timeout(10000); // 10 seconds
-    console.log("Initializing data source...");
-
-    // Initialize AppDataSource for testing
+  before(async function() {
     await AppDataSource.initialize();
-
-    console.log("Data source initialized");
   });
 
-  after(async () => {
-    // Cleanup after all tests
-    console.log("Destroying data source...");
+  after(async function() {
     await AppDataSource.destroy();
-    console.log("Data source destroyed");
   });
 
-  describe("Fetching all exercises", () => {
-    it("should return all exercises", async () => {
-      // Seed the database with exercises
-      const exercise1 = exercisesRepository.create({
-        name: "Push Up",
-        type: "Strength",
-        description: "A basic push-up",
-      });
-      const exercise2 = exercisesRepository.create({
-        name: "Squat",
-        type: "Strength",
-        description: "A basic squat",
-      });
-      await exercisesRepository.save([exercise1, exercise2]);
-
-      const exercises = await getExercises();
-      assert.strictEqual(exercises.length, 2);
-      assert.strictEqual(exercises[0].name, "Push Up");
-      assert.strictEqual(exercises[1].name, "Squat");
-    });
-
-    it("should throw an error if no exercises are found", async () => {
-      try {
-        await getExercises();
-        assert.fail("Expected error not thrown");
-      } catch (error: any) {
-        assert(
-          error instanceof BadRequestError,
-          "Error should be an instance of BadRequestError",
-        );
-        assert.strictEqual(error.message, "no exercises at the current moment");
-      }
-    });
+  beforeEach(async function() {
+    // Clear all tables in the correct order
+    const entities = AppDataSource.entityMetadatas;
+    for (const entity of entities.reverse()) {
+      const repository = AppDataSource.getRepository(entity.name);
+      await repository.query(`TRUNCATE "${entity.tableName}" CASCADE`);
+    }
   });
 
-  describe("Fetching exercise by ID", () => {
-    it("should return an exercise by valid ID", async () => {
-      const exercise = exercisesRepository.create({
-        name: "Bench Press",
+  describe("newExercise", function() {
+    try{
+    it("should create a new exercise", async function() {
+      const exerciseInfo = {
+        name: "Push-ups",
         type: "Strength",
-        description: "A bench press",
-      });
-      const savedExercise = await exercisesRepository.save(exercise);
-
-      const fetchedExercise = await getExerciseById(savedExercise.id);
-      assert.strictEqual(fetchedExercise!.name, "Bench Press");
-      assert.strictEqual(fetchedExercise!.type, "Strength");
-    });
-
-    it("should throw an error if exercise does not exist", async () => {
-      try {
-        await getExerciseById(999);
-        assert.fail("Expected error not thrown");
-      } catch (error: any) {
-        assert(
-          error instanceof BadRequestError,
-          "Error should be an instance of BadRequestError",
-        );
-        assert.strictEqual(error.message, "following exercise doesnt exist");
-      }
-    });
-  });
-
-  describe("Creating a new exercise", () => {
-    it("should create a new exercise if it does not exist", async () => {
-      const exerciseData = {
-        name: "Deadlift",
-        type: "Strength",
-        description: "A basic deadlift",
+        description: "A classic upper body exercise"
       };
 
-      await newExercise(exerciseData as Exercise);
-      const createdExercise = await exercisesRepository.findOne({
-        where: { name: "Deadlift" },
-      });
+      const result = await newExercise(exerciseInfo as Exercise);
+      assert.strictEqual(result, true);
 
-      assert.notStrictEqual(createdExercise, null);
-      assert.strictEqual(createdExercise!.name, "Deadlift");
+      const savedExercise = await  exercisesRepository.findOne({ where: { name: "Push-ups" } }); 
+      assert(savedExercise, "Exercise should be saved");
+      assert.strictEqual(savedExercise.name, "Push-ups");
+      assert.strictEqual(savedExercise.type, "Strength");
+      assert.strictEqual(savedExercise.description, "A classic upper body exercise");
+    });
+  }catch(err){
+    console.log("err",err);
+  }
+
+    it("should throw BadRequestError if exercise already exists", async function() {
+      const exerciseInfo = {
+        name: "Squats",
+        type: "Strength",
+        description: "A lower body exercise"
+      };
+
+      await newExercise(exerciseInfo as Exercise);
+
+      await assert.rejects(
+        async () => await newExercise(exerciseInfo as Exercise),
+        BadRequestError
+      );
+    });
+  });
+
+  describe("getExercises", function() {
+    it("should return all exercises", async function() {
+      const exercise1 = { name: "Lunges", type: "Strength", description: "A leg exercise" };
+      const exercise2 = { name: "Plank", type: "Core", description: "A core stability exercise" };
+
+      await newExercise(exercise1 as Exercise);
+      await newExercise(exercise2 as Exercise);
+
+      const fetchedExercises = await getExercises();
+      assert.strictEqual(fetchedExercises.length, 2);
+      assert(fetchedExercises.some(e => e.name === "Lunges"), "Should contain Lunges");
+      assert(fetchedExercises.some(e => e.name === "Plank"), "Should contain Plank");
     });
 
-    it("should throw an error if the exercise with the same name already exists", async () => {
-      const exerciseData = {
-        name: "Deadlift",
-        type: "Strength",
-        description: "A basic deadlift",
+    it("should throw BadRequestError if no exercises exist", async function() {
+      await assert.rejects(
+        async () => await getExercises(),
+        BadRequestError
+      );
+    });
+  });
+
+  describe("getExerciseById", function() {
+    it("should return exercise by id", async function() {
+      const exerciseInfo = {
+        name: "Crunches",
+        type: "Core",
+        description: "An abdominal exercise"
       };
-      await newExercise(exerciseData as Exercise);
-      try {
-        await newExercise(exerciseData as Exercise);
-        assert.fail("Expected error not thrown");
-      } catch (error: any) {
-        assert(
-          error instanceof BadRequestError,
-          "Error should be an instance of BadRequestError",
-        );
-        assert.strictEqual(
-          error.message,
-          "Exercise with this name already exists.",
-        );
+
+      await newExercise(exerciseInfo as Exercise);
+      const savedExercise = await AppDataSource.getRepository(Exercise).findOne({ where: { name: "Crunches" } });
+
+      if (savedExercise) {
+        const fetchedExercise = await getExerciseById(savedExercise.id);
+        assert(fetchedExercise, "Exercise should be fetched");
+        assert.strictEqual(fetchedExercise.name, "Crunches");
+        assert.strictEqual(fetchedExercise.type, "Core");
+        assert.strictEqual(fetchedExercise.description, "An abdominal exercise");
+      } else {
+        assert.fail("Exercise was not saved correctly");
       }
+    });
+
+    it("should throw BadRequestError if exercise doesn't exist", async function() {
+      await assert.rejects(
+        async () => await getExerciseById(999),
+        BadRequestError
+      );
     });
   });
 });

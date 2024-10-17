@@ -28,16 +28,20 @@ const findById = async (id: number) => {
 };
 
 // create a new exercise
-const createExercise = async (exerciseInformation: Exercise) => {
+export const createExercise = async (exerciseInformation: Exercise) => {
+  console.log("exercise Information before creating", exerciseInformation);
   const newExercise = new Exercise();
   newExercise.name = exerciseInformation.name;
+  console.log("new exercise information", newExercise.name);
   newExercise.type = exerciseInformation.type;
   newExercise.description = exerciseInformation.description;
+  console.log("the exercise has been added");
   await exercisesRepository.save(newExercise);
 };
 
 // Function to create a new exercise
 export const newExercise = async (exerciseInformation: Exercise) => {
+  console.log("exercise Information", exerciseInformation);
   exerciseService.info("checking if the exercise already exists");
   const exerciseExists = await getByName(exerciseInformation.name);
 
@@ -45,9 +49,8 @@ export const newExercise = async (exerciseInformation: Exercise) => {
     throw new BadRequestError("Exercise with this name already exists.");
   }
 
-  // If exercise does not exist, save the new exercise
-  exerciseService.info("user created");
-  const newExercise = createExercise(exerciseInformation);
+  exerciseService.info("exercise created");
+  const newExercise = await createExercise(exerciseInformation);
   return true;
 };
 

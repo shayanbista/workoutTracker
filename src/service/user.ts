@@ -9,6 +9,7 @@ import { NotFoundError } from "../error/NotFoundError";
 export const userRepository = AppDataSource.getRepository(User);
 
 export const findByEmail = async (email: string) => {
+  console.log("control reached here");
   return userRepository.findOneBy({ email });
 };
 
@@ -44,7 +45,6 @@ export const createUser = async (
   console.log("email", email);
   const existingUser = await findByEmail(email);
 
-  console.log("existing user", existingUser);
   if (existingUser) {
     throw new BadRequestError("Email already in use");
   }

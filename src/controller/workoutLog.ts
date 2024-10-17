@@ -27,7 +27,7 @@ export const getUserReport = async (
 ) => {
   try {
     const userId = req.user?.id!;
-    const report = await workoutLogService.userReport(userId);
+    const report = await workoutLogService.userReport(Number(userId));
     res.status(httpStatusCodes.OK).json(report);
   } catch (err) {
     next(err);

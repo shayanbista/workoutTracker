@@ -11,7 +11,6 @@ describe("login function", () => {
   let comparePasswordStub: sinon.SinonStub;
   let jwtSignStub: sinon.SinonStub;
 
-
   beforeEach(() => {
     userServiceStub = sinon.stub(userService, "findByEmail").resolves(mockUser);
     sinon.stub(userService, "getUser").resolves(mockUser);
@@ -36,7 +35,11 @@ describe("login function", () => {
     assert.strictEqual(tokens?.refreshToken, "token");
 
     sinon.assert.calledOnceWithExactly(userServiceStub, "test@example.com");
-    sinon.assert.calledOnceWithExactly(comparePasswordStub, "password123", "hashedPassword");
+    sinon.assert.calledOnceWithExactly(
+      comparePasswordStub,
+      "password123",
+      "hashedPassword",
+    );
     sinon.assert.calledTwice(jwtSignStub);
   });
 
@@ -58,7 +61,7 @@ describe("login function", () => {
       (err: Error) => {
         assert.strictEqual(err.message, "Password doesnt match");
         return true;
-      }
+      },
     );
   });
 
@@ -71,7 +74,7 @@ describe("login function", () => {
       (err: Error) => {
         assert.strictEqual(err.message, "Account doesnt match");
         return true;
-      }
+      },
     );
   });
 });
