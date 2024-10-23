@@ -6,10 +6,12 @@ import { Request } from "../interface/request";
 
 import loggerWithNameSpace from "../utils/logger";
 
+import * as workoutSession from "../service/workoutPlanSession";
+
 const workoutPlanSessionController = loggerWithNameSpace(
   "workoutPlanSessionController",
 );
-import * as workoutSession from "../service/workoutPlanSession";
+
 
 export const addWorkoutSession = async (
   req: Request,
