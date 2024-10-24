@@ -175,3 +175,8 @@ To seed the database with initial data, use:
 ```bash
 npm run seed
 ```
+
+note:After running the integration test run the seed again to reset the data 
+
+
+
